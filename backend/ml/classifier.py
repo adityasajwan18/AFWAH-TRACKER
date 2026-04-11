@@ -129,35 +129,68 @@ def get_classifier():
 
 # ── Main Classification Function ──────────────────────────────
 
-def classify_text(text: str) -> dict:
+def classify_text(text: str, include_explanations: bool = True) -> dict:
     """
     Classify a social media post as misinformation, panic-inducing, or safe.
+    Enhanced with stance detection, sarcasm analysis, and explainability.
 
     Args:
         text: The raw post content to analyze.
+        include_explanations: Whether to include model explanations (adds latency).
 
     Returns:
         {
-            "label":        str,   # Top predicted label
-            "scores":       dict,  # Score per label (0.0 – 1.0)
-            "confidence":   float, # Score of the top label
-            "model_used":   str,   # Which model produced this
-            "is_flagged":   bool,  # True if misinfo or panic
-            "latency_ms":  float,  # Inference time
+            "label":            str,   # Top predicted label
+            "scores":           dict,  # Score per label (0.0 – 1.0)
+            "confidence":       float, # Score of the top label
+            "model_used":       str,   # Which model produced this
+            "is_flagged":       bool,  # True if misinfo or panic
+            "latency_ms":       float, # Inference time
+            "stance":           dict,  # NEW: Stance analysis
+            "sarcasm":          dict,  # NEW: Sarcasm detection
+            "explanation":      dict,  # NEW: Model explanation
+            "recommendation":   str,   # NEW: Action recommendation
         }
     """
+    from backend.ml.model_optimizer import (
+        get_cached_prediction, cache_prediction, 
+        record_prediction_time
+    )
+    from backend.ml.stance_detector import detect_stance
+    from backend.ml.sarcasm_detector import detect_sarcasm
+    from backend.ml.model_explainability import explain_classification
+    
     t0 = time.time()
     text = text.strip()
 
+    # ── Check cache first ──────────────────────────────────────
+    cached_result = get_cached_prediction(text)
+    if cached_result:
+        latency = time.time() - t0
+        record_prediction_time(latency * 1000, cache_hit=True)
+        cached_result["latency_ms"] = round(latency * 1000, 2)
+        cached_result["from_cache"] = True
+        return cached_result
+
     if not text:
-        return {
+        result = {
             "label": "safe",
             "scores": {"misinformation": 0.0, "panic-inducing": 0.0, "safe": 1.0},
             "confidence": 1.0,
             "model_used": "empty_input_guard",
             "is_flagged": False,
             "latency_ms": 0.0,
+            "from_cache": False,
         }
+        cache_prediction(text, result)
+        return result
+
+    # ── Analyze stance & sarcasm first ─────────────────────
+    stance_info = detect_stance(text)
+    sarcasm_info = detect_sarcasm(text)
+    
+    # If highly sarcastic, adjust interpretation
+    is_highly_sarcastic = sarcasm_info["combined_score"] > 0.6
 
     clf = get_classifier()
 
@@ -186,19 +219,73 @@ def classify_text(text: str) -> dict:
             logger.error(f"Inference error: {e} — using keyword fallback")
             result = _keyword_classify(text)
 
-    # ── Enrich result ─────────────────────────────────────────
+    # ── Confidence adjustment based on sarcasm ─────────────────
     top_score = result["scores"][result["label"]]
+    
+    if is_highly_sarcastic:
+        # Reduce confidence if sarcasm detected (inherent uncertainty)
+        top_score = top_score * 0.7
+        logger.info(f"Confidence reduced due to high sarcasm ({sarcasm_info['combined_score']:.2f})")
+
     is_flagged = (
         result["label"] == "misinformation" and top_score >= MISINFO_THRESHOLD
     ) or (
         result["label"] == "panic-inducing" and top_score >= PANIC_THRESHOLD
     )
 
+    # ── Generate recommendation ────────────────────────────────
+    recommendation = _generate_recommendation(
+        result["label"], top_score, stance_info, sarcasm_info
+    )
+
+    # ── Build enriched result ─────────────────────────────────
     result["confidence"] = round(top_score, 4)
     result["is_flagged"] = is_flagged
-    result["latency_ms"] = round((time.time() - t0) * 1000, 2)
+    result["stance"] = stance_info
+    result["sarcasm"] = sarcasm_info
+    result["recommendation"] = recommendation
+    result["from_cache"] = False
+
+    # ── Add explanations if requested ──────────────────────────
+    if include_explanations:
+        result["explanation"] = explain_classification(
+            text, result["label"], result["confidence"]
+        )
+
+    latency_ms = round((time.time() - t0) * 1000, 2)
+    result["latency_ms"] = latency_ms
+    
+    # ── Cache result ───────────────────────────────────────────
+    cache_prediction(text, result)
+    record_prediction_time(latency_ms, cache_hit=False)
 
     return result
+
+
+def _generate_recommendation(label: str, confidence: float, 
+                           stance_info: dict, sarcasm_info: dict) -> str:
+    """
+    Generate an action recommendation based on analysis.
+    """
+    if sarcasm_info["combined_score"] > 0.6:
+        return "⚠️ MANUAL REVIEW: High sarcasm detected. Verify actual intent before flagging."
+    
+    if label == "misinformation":
+        if confidence > 0.85:
+            return "🚩 HIGH RISK: Likely misinformation. Recommend fact-checking and possible removal."
+        elif confidence > 0.65:
+            return "⚠️ MEDIUM RISK: Possible misinformation. Monitor and verify before action."
+        else:
+            return "❓ LOW CONFIDENCE: Insufficient evidence. Manual review recommended."
+    
+    elif label == "panic-inducing":
+        if confidence > 0.8:
+            return "⚠️ HIGH PANIC RISK: May cause unnecessary alarm. Consider flagging pending verification."
+        else:
+            return "ℹ️ LOW PANIC RISK: Unlikely to cause public concern."
+    
+    else:  # safe
+        return "✅ SAFE: Appears to be legitimate information."
 
 
 def get_model_status() -> dict:
