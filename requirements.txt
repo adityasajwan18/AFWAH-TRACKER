@@ -41,6 +41,14 @@ wordcloud==1.9.3          # Visualize important words
 sentence-transformers==2.2.2  # For semantic similarity
 spacy==3.7.2              # Advanced NLP (optional for multilingual support)
 
+# --- Social Media Integration ---
+aiohttp==3.9.0            # Async HTTP client for API calls
+tweepy==4.14.0
+,praw==7.7.1               # Reddit API wrapper (optional, for ease)
+
+# --- Video/Media Processing ---
+opencv-python==4.9.0.80   ,moviepy==1.0.3,librosa==0.10.0,soundfile==0.12.1         
+
 # --- Dev / Testing ---
 pytest==8.2.0
 pytest-asyncio==0.23.6

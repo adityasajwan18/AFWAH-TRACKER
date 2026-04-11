@@ -38,6 +38,10 @@ from backend.api.routes import image
 app.include_router(image.router,   prefix="/api", tags=["Image Analysis"])
 from backend.api.routes import model_insights
 app.include_router(model_insights.router, prefix="/api", tags=["Model Insights"])
+from backend.api.routes import social_media
+app.include_router(social_media.router, prefix="/api", tags=["Social Media"])
+from backend.api.routes import media
+app.include_router(media.router, prefix="/api", tags=["Media Analysis"])
 
 # ── Health Check ──────────────────────────────────────────────
 @app.get("/", tags=["Health"])

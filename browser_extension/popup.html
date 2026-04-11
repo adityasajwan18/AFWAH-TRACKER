@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AFWAH - Fact Checker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔍 AFWAH Fact Checker</h1>
+      <p class="subtitle">Real-time Misinformation Detection</p>
+    </div>
+    
+    <!-- Settings Tab -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="analyzer">Analyzer</button>
+      <button class="tab-btn" data-tab="settings">Settings</button>
+    </div>
+    
+    <!-- Analyzer Tab -->
+    <div id="analyzer" class="tab-content active">
+      <div class="analyzer-section">
+        <label for="text-input">Enter or paste text to analyze:</label>
+        <textarea
+          id="text-input"
+          class="text-input"
+          placeholder="Paste a social media post, headline, or claim here..."
+          rows="4"
+        ></textarea>
+        
+        <button id="analyze-btn" class="btn btn-primary">🔍 Analyze</button>
+        
+        <!-- Loading state -->
+        <div id="loading" class="loading hidden">
+          <div class="spinner"></div>
+          <p>Analyzing...</p>
+        </div>
+        
+        <!-- Results -->
+        <div id="results" class="results hidden">
+          <div id="result-card" class="result-card"></div>
+        </div>
+        
+        <!-- Error -->
+        <div id="error" class="error hidden"></div>
+      </div>
+    </div>
+    
+    <!-- Settings Tab -->
+    <div id="settings" class="tab-content">
+      <div class="settings-section">
+        <h3>API Configuration</h3>
+        
+        <div class="setting-item">
+          <label for="api-url">API URL:</label>
+          <input
+            type="text"
+            id="api-url"
+            class="setting-input"
+            placeholder="http://localhost:8000"
+            value="http://localhost:8000"
+          >
+        </div>
+        
+        <div class="setting-item">
+          <label for="auto-check">
+            <input type="checkbox" id="auto-check">
+            Auto-check posts on page
+          </label>
+          <small>Automatically analyze posts on social media pages</small>
+        </div>
+        
+        <div class="setting-item">
+          <label for="confidence-threshold">Confidence Threshold:</label>
+          <select id="confidence-threshold" class="setting-input">
+            <option value="0.5">Low (50%)</option>
+            <option value="0.65" selected>Medium (65%)</option>
+            <option value="0.8">High (80%)</option>
+            <option value="0.9">Very High (90%)</option>
+          </select>
+        </div>
+        
+        <button id="save-settings-btn" class="btn btn-secondary">💾 Save Settings</button>
+        <div id="settings-status" class="status-msg"></div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <small>Powered by AFWAH Tracker • Real-time Misinformation Detection</small>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
