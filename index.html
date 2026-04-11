@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Afwaah Tracker — Misinformation Intelligence Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+
+  <style>
+    /* ── Design System ─────────────────────────────────────── */
+    :root {
+      --bg:           #08090c;
+      --bg-card:      #0e1016;
+      --bg-elevated:  #13161e;
+      --border:       #1e2230;
+      --border-bright:#2a3050;
+      --text:         #e8eaf2;
+      --text-dim:     #6b7394;
+      --text-muted:   #3a4060;
+      --red:          #ff2d2d;
+      --red-dim:      rgba(255,45,45,0.12);
+      --orange:       #ff8c00;
+      --orange-dim:   rgba(255,140,0,0.12);
+      --yellow:       #ffd700;
+      --yellow-dim:   rgba(255,215,0,0.10);
+      --green:        #00e676;
+      --green-dim:    rgba(0,230,118,0.10);
+      --blue:         #4fc3f7;
+      --blue-dim:     rgba(79,195,247,0.10);
+      --font-display: 'Syne', sans-serif;
+      --font-mono:    'JetBrains Mono', monospace;
+      --radius:       6px;
+      --transition:   0.2s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 14px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Scanline effect — makes it feel like a real ops dashboard */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── Layout ────────────────────────────────────────────── */
+    .app { display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ── Header ────────────────────────────────────────────── */
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 28px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(90deg, rgba(255,45,45,0.06) 0%, transparent 60%);
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-left { display: flex; align-items: center; gap: 14px; }
+
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-size: 1.25rem; font-weight: 800;
+      letter-spacing: -0.02em; color: var(--text);
+    }
+
+    .logo-icon {
+      width: 32px; height: 32px;
+      background: var(--red);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; animation: pulse-icon 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-icon {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,45,45,0.6); }
+      50%       { box-shadow: 0 0 0 8px rgba(255,45,45,0); }
+    }
+
+    .header-badge {
+      font-size: 0.65rem; font-weight: 500;
+      padding: 3px 8px; border-radius: 2px;
+      background: var(--red-dim); color: var(--red);
+      border: 1px solid rgba(255,45,45,0.3);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      animation: blink 1.8s step-end infinite;
+    }
+
+    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+
+    .header-right { display: flex; align-items: center; gap: 18px; }
+
+    .live-clock {
+      font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.04em;
+    }
+
+    .status-indicator {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.7rem; color: var(--green);
+    }
+
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform: scale(1); }
+      50% { opacity:0.5; transform: scale(0.7); }
+    }
+
+    /* ── Main Grid ─────────────────────────────────────────── */
+    .main { display: grid; grid-template-columns: 340px 1fr; flex: 1; }
+
+    /* ── Sidebar ───────────────────────────────────────────── */
+    .sidebar {
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── KPI Cards ─────────────────────────────────────────── */
+    .kpi-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .kpi {
+      background: var(--bg-card);
+      padding: 16px;
+      display: flex; flex-direction: column; gap: 4px;
+      cursor: default;
+      transition: background var(--transition);
+    }
+
+    .kpi:hover { background: var(--bg-elevated); }
+
+    .kpi-label {
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-dim);
+    }
+
+    .kpi-value {
+      font-family: var(--font-display);
+      font-size: 1.8rem; font-weight: 800;
+      line-height: 1; color: var(--text);
+    }
+
+    .kpi-value.red    { color: var(--red); }
+    .kpi-value.orange { color: var(--orange); }
+    .kpi-value.green  { color: var(--green); }
+    .kpi-value.blue   { color: var(--blue); }
+
+    .kpi-delta {
+      font-size: 0.65rem; color: var(--text-muted);
+    }
+
+    /* ── Panel Headers ─────────────────────────────────────── */
+    .panel-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .panel-title {
+      font-size: 0.68rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    .panel-badge {
+      font-size: 0.6rem; padding: 2px 6px;
+      border-radius: 2px; background: var(--red-dim);
+      color: var(--red); border: 1px solid rgba(255,45,45,0.25);
+    }
+
+    /* ── Analyze Input ─────────────────────────────────────── */
+    .analyze-panel { padding: 14px; border-bottom: 1px solid var(--border); }
+
+    .analyze-panel textarea {
+      width: 100%; background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text); font-family: var(--font-mono); font-size: 0.75rem;
+      padding: 10px; border-radius: var(--radius);
+      resize: none; height: 72px; outline: none;
+      transition: border-color var(--transition);
+    }
+
+    .analyze-panel textarea:focus { border-color: var(--red); }
+    .analyze-panel textarea::placeholder { color: var(--text-muted); }
+
+    .analyze-btn {
+      margin-top: 8px; width: 100%;
+      background: var(--red); color: #fff;
+      border: none; border-radius: var(--radius);
+      padding: 9px 0; font-family: var(--font-mono); font-size: 0.75rem;
+      font-weight: 500; cursor: pointer; letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: all var(--transition);
+    }
+
+    .analyze-btn:hover { background: #ff4545; transform: translateY(-1px); }
+    .analyze-btn:active { transform: translateY(0); }
+    .analyze-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .analyze-result {
+      margin-top: 10px; padding: 10px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      font-size: 0.72rem; line-height: 1.6;
+      display: none;
+    }
+
+    .analyze-result.show { display: block; }
+    .analyze-result.misinformation { border-color: rgba(255,45,45,0.4); background: var(--red-dim); }
+    .analyze-result.panic          { border-color: rgba(255,140,0,0.4); background: var(--orange-dim); }
+    .analyze-result.safe           { border-color: rgba(0,230,118,0.3); background: var(--green-dim); }
+
+    .result-label {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 0.85rem; margin-bottom: 4px;
+    }
+
+    .score-bar-wrap { margin-top: 6px; }
+    .score-bar-label { display: flex; justify-content: space-between; font-size: 0.62rem; color: var(--text-dim); margin-bottom: 3px; }
+    .score-bar-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .score-bar-fill  { height: 100%; border-radius: 2px; transition: width 0.8s ease; }
+
+    /* ── Post Feed ─────────────────────────────────────────── */
+    .post-feed { flex: 1; overflow-y: auto; }
+
+    .post-feed::-webkit-scrollbar { width: 4px; }
+    .post-feed::-webkit-scrollbar-track { background: transparent; }
+    .post-feed::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .post-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background var(--transition);
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-8px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .post-item:hover { background: var(--bg-elevated); }
+
+    .post-meta {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 5px;
+    }
+
+    .post-author {
+      font-size: 0.7rem; font-weight: 500; color: var(--blue);
+    }
+
+    .post-platform {
+      font-size: 0.6rem; color: var(--text-muted);
+    }
+
+    .post-time {
+      font-size: 0.6rem; color: var(--text-muted); margin-left: auto;
+    }
+
+    .post-content {
+      font-size: 0.72rem; line-height: 1.5; color: var(--text);
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .post-footer {
+      display: flex; align-items: center; gap: 10px; margin-top: 6px;
+    }
+
+    .post-label {
+      font-size: 0.58rem; padding: 2px 6px; border-radius: 2px;
+      text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500;
+    }
+
+    .post-label.misinformation { background: var(--red-dim); color: var(--red); }
+    .post-label.panic-inducing { background: var(--orange-dim); color: var(--orange); }
+    .post-label.safe           { background: var(--green-dim); color: var(--green); }
+
+    .post-stats {
+      display: flex; gap: 8px; margin-left: auto;
+      font-size: 0.62rem; color: var(--text-muted);
+    }
+
+    /* ── Content Area ──────────────────────────────────────── */
+    .content { display: flex; flex-direction: column; overflow: hidden; }
+
+    /* ── Graph Controls ────────────────────────────────────── */
+    .graph-controls {
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ctrl-label {
+      font-size: 0.65rem; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+
+    .filter-btn {
+      padding: 5px 12px; border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--bg-card); color: var(--text-dim);
+      font-family: var(--font-mono); font-size: 0.68rem;
+      cursor: pointer; transition: all var(--transition);
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--red); color: var(--red);
+      background: var(--red-dim);
+    }
+
+    .graph-legend {
+      margin-left: auto; display: flex; align-items: center; gap: 14px;
+    }
+
+    .legend-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.62rem; color: var(--text-dim);
+    }
+
+    .legend-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+
+    /* ── Graph Canvas ──────────────────────────────────────── */
+    .graph-wrapper {
+      flex: 1; position: relative; overflow: hidden;
+      background: radial-gradient(ellipse at 40% 40%, rgba(255,45,45,0.04) 0%, transparent 65%),
+                  radial-gradient(ellipse at 80% 80%, rgba(79,195,247,0.03) 0%, transparent 50%);
+    }
+
+    #graph-svg { width: 100%; height: 100%; }
+
+    /* ── Graph Tooltip ─────────────────────────────────────── */
+    .tooltip {
+      position: absolute; pointer-events: none;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-bright);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 0.72rem; line-height: 1.6;
+      max-width: 240px;
+      opacity: 0; transition: opacity 0.15s;
+      z-index: 50;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    }
+
+    .tooltip.show { opacity: 1; }
+    .tooltip-name { font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .tooltip-row  { color: var(--text-dim); }
+    .tooltip-row span { color: var(--text); }
+
+    /* ── Patient Zero Panel ────────────────────────────────── */
+    .pz-panel {
+      position: absolute; bottom: 20px; right: 20px;
+      width: 280px;
+      background: var(--bg-elevated);
+      border: 1px solid rgba(255,45,45,0.4);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: 0 0 40px rgba(255,45,45,0.1);
+      display: none;
+    }
+
+    .pz-panel.show { display: block; animation: fadeUp 0.3s ease; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(8px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    .pz-header {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--red); font-weight: 500;
+    }
+
+    .pz-icon { font-size: 14px; }
+
+    .pz-row {
+      display: flex; justify-content: space-between;
+      font-size: 0.7rem; padding: 3px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pz-row:last-child { border: none; }
+    .pz-row-label { color: var(--text-dim); }
+    .pz-row-val   { color: var(--text); font-weight: 500; }
+    .pz-row-val.red { color: var(--red); }
+
+    .pz-content {
+      margin-top: 8px; padding: 8px;
+      background: var(--bg); border-radius: 4px;
+      font-size: 0.67rem; color: var(--text-dim);
+      line-height: 1.5;
+      border-left: 2px solid var(--red);
+    }
+
+    .chain-viz {
+      display: flex; align-items: center; gap: 4px;
+      flex-wrap: wrap; margin-top: 8px;
+    }
+
+    .chain-node {
+      font-size: 0.6rem; padding: 2px 6px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 2px; color: var(--text-dim);
+    }
+
+    .chain-node.origin { border-color: var(--red); color: var(--red); }
+    .chain-arrow { color: var(--text-muted); font-size: 0.7rem; }
+
+    /* ── Loading Overlay ───────────────────────────────────── */
+    .loading-overlay {
+      position: absolute; inset: 0;
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 16px; z-index: 200;
+      transition: opacity 0.5s;
+    }
+
+    .loading-overlay.hidden { opacity: 0; pointer-events: none; }
+
+    .loading-spinner {
+      width: 40px; height: 40px;
+      border: 2px solid var(--border);
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text {
+      font-size: 0.72rem; color: var(--text-dim);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Empty State ───────────────────────────────────────── */
+    .empty {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      height: 200px; color: var(--text-muted);
+      font-size: 0.72rem; gap: 8px;
+    }
+
+    /* ── Responsive tweaks ─────────────────────────────────── */
+    @media (max-width: 900px) {
+      .main { grid-template-columns: 1fr; }
+      .sidebar { max-height: 50vh; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ── Header ─────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">
+        <div class="logo-icon">🚨</div>
+        Afwaah Tracker
+      </div>
+      <div class="header-badge">● Live</div>
+    </div>
+    <div class="header-right">
+      <div class="live-clock" id="clock">--:--:--</div>
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span id="api-status">Connecting...</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main ───────────────────────────────────────────── -->
+  <div class="main">
+
+    <!-- ── Sidebar ──────────────────────────────────────── -->
+    <aside class="sidebar">
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid" id="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-label">Total Posts</div>
+          <div class="kpi-value blue" id="kpi-total">—</div>
+          <div class="kpi-delta">analyzed</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Misinformation</div>
+          <div class="kpi-value red" id="kpi-misinfo">—</div>
+          <div class="kpi-delta">flagged posts</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Panic-Inducing</div>
+          <div class="kpi-value orange" id="kpi-panic">—</div>
+          <div class="kpi-delta">alarming posts</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Graph Edges</div>
+          <div class="kpi-value" id="kpi-edges">—</div>
+          <div class="kpi-delta">spread connections</div>
+        </div>
+      </div>
+
+      <!-- Analyze Panel -->
+      <div class="analyze-panel">
+        <div class="panel-header" style="padding:0 0 10px 0; border:none;">
+          <span class="panel-title">Analyze Post</span>
+        </div>
+        <textarea id="analyze-input"
+          placeholder="Paste any social media post here to classify it..."></textarea>
+        <button class="analyze-btn" id="analyze-btn" onclick="analyzeText()">
+          Run NLP Analysis
+        </button>
+        <div class="analyze-result" id="analyze-result"></div>
+      </div>
+
+      <!-- Post Feed -->
+      <div class="panel-header">
+        <span class="panel-title">Live Feed</span>
+        <span class="panel-badge" id="feed-count">0 posts</span>
+      </div>
+      <div class="post-feed" id="post-feed">
+        <div class="empty">Loading posts...</div>
+      </div>
+
+    </aside>
+
+    <!-- ── Content ───────────────────────────────────────── -->
+    <div class="content">
+
+      <!-- Graph Controls -->
+      <div class="graph-controls">
+        <span class="ctrl-label">Filter:</span>
+        <button class="filter-btn active" onclick="filterGraph(null, this)">All Stories</button>
+        <button class="filter-btn" onclick="filterGraph('STORY_001', this)">🔴 STORY_001 (Water)</button>
+        <button class="filter-btn" onclick="filterGraph('STORY_002', this)">🟠 STORY_002 (5G)</button>
+
+        <div class="graph-legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#ff2d2d;box-shadow:0 0 6px #ff2d2d;"></div>
+            Patient Zero
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#ff8c00;"></div>
+            Influencer
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#e84545;"></div>
+            Spreader
+          </div>
+        </div>
+      </div>
+
+      <!-- Graph Canvas -->
+      <div class="graph-wrapper" id="graph-wrapper">
+        <div class="loading-overlay" id="graph-loading">
+          <div class="loading-spinner"></div>
+          <div class="loading-text">Building misinformation network...</div>
+        </div>
+
+        <svg id="graph-svg"></svg>
+        <div class="tooltip" id="tooltip"></div>
+
+        <!-- Patient Zero Panel -->
+        <div class="pz-panel" id="pz-panel"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   Afwaah Tracker — Dashboard JS
+   ────────────────────────────
+   Talks to the FastAPI backend and renders:
+   1. KPI cards from /api/stats
+   2. Post feed from /api/posts
+   3. D3.js force-directed graph from /api/graph-data
+   4. Patient Zero panel from /api/patient-zero/STORY_001
+   5. Live NLP analysis via /api/analyze
+   ============================================================ */
+
+const API = 'http://localhost:8000';  // Change to your API URL
+
+// ── Clock ──────────────────────────────────────────────────
+function updateClock() {
+  document.getElementById('clock').textContent =
+    new Date().toLocaleTimeString('en-IN', { hour12: false });
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ── API helpers ────────────────────────────────────────────
+async function apiFetch(path) {
+  const res = await fetch(API + path);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+async function apiPost(path, body) {
+  const res = await fetch(API + path, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+// ── Startup ────────────────────────────────────────────────
+async function init() {
+  // 1. Check API health
+  try {
+    await apiFetch('/health');
+    document.getElementById('api-status').textContent = 'API Online';
+  } catch {
+    document.getElementById('api-status').textContent = 'API Offline';
+    document.getElementById('api-status').style.color = 'var(--red)';
+  }
+
+  // 2. Load KPIs
+  loadStats();
+
+  // 3. Load post feed
+  loadFeed();
+
+  // 4. Load D3 graph
+  loadGraph(null);
+
+  // 5. Load Patient Zero info
+  loadPatientZero('STORY_001');
+}
+
+// ── KPI Cards ──────────────────────────────────────────────
+async function loadStats() {
+  try {
+    const s = await apiFetch('/api/stats');
+    animateCount('kpi-total',  s.total_posts_analyzed);
+    animateCount('kpi-misinfo', s.misinformation_count);
+    animateCount('kpi-panic',   s.panic_inducing_count);
+    animateCount('kpi-edges',   s.graph_edges);
+  } catch(e) {
+    console.warn('Stats load failed:', e);
+  }
+}
+
+function animateCount(id, target) {
+  const el = document.getElementById(id);
+  const start = 0;
+  const duration = 800;
+  const t0 = performance.now();
+  function step(now) {
+    const p = Math.min((now - t0) / duration, 1);
+    el.textContent = Math.round(p * target);
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ── Post Feed ──────────────────────────────────────────────
+async function loadFeed() {
+  const feed = document.getElementById('post-feed');
+  try {
+    const data = await apiFetch('/api/posts');
+    document.getElementById('feed-count').textContent = `${data.total} posts`;
+
+    // Sort: flagged posts first, then by timestamp desc
+    const sorted = [...data.posts].sort((a, b) => {
+      if (a.label === 'misinformation' && b.label !== 'misinformation') return -1;
+      if (b.label === 'misinformation' && a.label !== 'misinformation') return 1;
+      return new Date(b.timestamp) - new Date(a.timestamp);
+    });
+
+    feed.innerHTML = '';
+    sorted.forEach((post, i) => {
+      const el = createPostCard(post);
+      el.style.animationDelay = `${i * 18}ms`;
+      feed.appendChild(el);
+    });
+  } catch(e) {
+    feed.innerHTML = `<div class="empty">⚠ Could not load posts.<br>Is the API running?</div>`;
+    console.warn(e);
+  }
+}
+
+function createPostCard(post) {
+  const div = document.createElement('div');
+  div.className = 'post-item';
+  const ts = new Date(post.timestamp).toLocaleString('en-IN', {
+    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+  });
+  const rt = post.engagement?.retweet_count ?? 0;
+  const lk = post.engagement?.like_count ?? 0;
+
+  div.innerHTML = `
+    <div class="post-meta">
+      <span class="post-author">@${post.author_id}</span>
+      <span class="post-platform">${post.platform}</span>
+      <span class="post-time">${ts}</span>
+    </div>
+    <div class="post-content">${escHtml(post.content)}</div>
+    <div class="post-footer">
+      <span class="post-label ${post.label}">${post.label}</span>
+      ${post.is_patient_zero ? '<span class="post-label" style="background:rgba(255,45,45,0.3);color:#ff2d2d;border:1px solid #ff2d2d">⚡ Patient Zero</span>' : ''}
+      <div class="post-stats">
+        <span>🔁 ${rt}</span>
+        <span>❤ ${lk}</span>
+      </div>
+    </div>
+  `;
+
+  // Click to quick-analyze
+  div.onclick = () => {
+    document.getElementById('analyze-input').value = post.content;
+    analyzeText();
+  };
+
+  return div;
+}
+
+// ── D3.js Force Graph ──────────────────────────────────────
+let simulation = null;
+
+async function loadGraph(storyId) {
+  const loader = document.getElementById('graph-loading');
+  loader.classList.remove('hidden');
+
+  try {
+    const url = storyId ? `/api/graph-data?story_id=${storyId}` : '/api/graph-data';
+    const data = await apiFetch(url);
+    renderGraph(data);
+  } catch(e) {
+    console.warn('Graph load failed:', e);
+    // Render a fallback demo graph from local data if available
+    renderFallbackGraph();
+  } finally {
+    loader.classList.add('hidden');
+  }
+}
+
+function renderGraph(data) {
+  const svg = d3.select('#graph-svg');
+  svg.selectAll('*').remove();
+
+  if (simulation) simulation.stop();
+
+  const wrapper = document.getElementById('graph-wrapper');
+  const W = wrapper.clientWidth;
+  const H = wrapper.clientHeight;
+
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+  // ── Zoom behavior ─────────────────────────────────────
+  const g = svg.append('g');
+
+  svg.call(
+    d3.zoom()
+      .scaleExtent([0.3, 4])
+      .on('zoom', (event) => g.attr('transform', event.transform))
+  );
+
+  // ── Definitions (arrowhead marker) ────────────────────
+  svg.append('defs').append('marker')
+    .attr('id', 'arrow')
+    .attr('viewBox', '0 -4 8 8')
+    .attr('refX', 18).attr('refY', 0)
+    .attr('markerWidth', 6).attr('markerHeight', 6)
+    .attr('orient', 'auto')
+    .append('path')
+      .attr('d', 'M0,-4L8,0L0,4')
+      .attr('fill', 'rgba(255,45,45,0.5)');
+
+  const nodes = data.nodes;
+  const links = data.links;
+
+  if (!nodes.length) {
+    document.getElementById('graph-loading').classList.remove('hidden');
+    document.getElementById('graph-loading').querySelector('.loading-text').textContent =
+      'No graph data. Run data_generator.py and restart the API.';
+    return;
+  }
+
+  // ── Force simulation ──────────────────────────────────
+  simulation = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links)
+      .id(d => d.id)
+      .distance(d => 80)
+      .strength(0.6)
+    )
+    .force('charge', d3.forceManyBody().strength(-280))
+    .force('center', d3.forceCenter(W / 2, H / 2))
+    .force('collision', d3.forceCollide().radius(d => d.size + 6));
+
+  // ── Links ─────────────────────────────────────────────
+  const link = g.append('g').selectAll('line')
+    .data(links).join('line')
+    .attr('stroke', d => d.story_id === 'STORY_001' ? 'rgba(255,45,45,0.35)' : 'rgba(255,140,0,0.3)')
+    .attr('stroke-width', 1.2)
+    .attr('marker-end', 'url(#arrow)');
+
+  // ── Nodes ─────────────────────────────────────────────
+  const node = g.append('g').selectAll('g')
+    .data(nodes).join('g')
+    .attr('cursor', 'pointer')
+    .call(
+      d3.drag()
+        .on('start', (event, d) => {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          d.fx = d.x; d.fy = d.y;
+        })
+        .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
+        .on('end', (event, d) => {
+          if (!event.active) simulation.alphaTarget(0);
+          d.fx = null; d.fy = null;
+        })
+    );
+
+  // Glow effect for Patient Zero
+  node.filter(d => d.is_patient_zero)
+    .append('circle')
+    .attr('r', d => d.size + 10)
+    .attr('fill', 'none')
+    .attr('stroke', 'rgba(255,45,45,0.3)')
+    .attr('stroke-width', 2)
+    .style('animation', 'pulse-graph 2s ease-in-out infinite');
+
+  // Main circle
+  node.append('circle')
+    .attr('r', d => d.size)
+    .attr('fill', d => d.color)
+    .attr('fill-opacity', d => d.is_patient_zero ? 1 : 0.75)
+    .attr('stroke', d => d.is_patient_zero ? '#ff2d2d' : 'transparent')
+    .attr('stroke-width', 2);
+
+  // Icon labels
+  node.filter(d => d.is_patient_zero || d.is_influencer)
+    .append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dominant-baseline', 'central')
+    .attr('font-size', d => d.is_patient_zero ? '10px' : '8px')
+    .attr('fill', '#fff')
+    .attr('pointer-events', 'none')
+    .text(d => d.is_patient_zero ? '⚡' : '📢');
+
+  // ── Tooltip ───────────────────────────────────────────
+  const tooltip = document.getElementById('tooltip');
+
+  node
+    .on('mouseenter', (event, d) => {
+      tooltip.innerHTML = `
+        <div class="tooltip-name">@${d.username}</div>
+        <div class="tooltip-row">ID: <span>${d.id}</span></div>
+        <div class="tooltip-row">Followers: <span>${(d.follower_count||0).toLocaleString()}</span></div>
+        <div class="tooltip-row">Role: <span>${d.is_patient_zero ? '⚡ Patient Zero' : d.role}</span></div>
+        ${d.stories?.length ? `<div class="tooltip-row">Stories: <span>${d.stories.join(', ')}</span></div>` : ''}
+      `;
+      tooltip.classList.add('show');
+    })
+    .on('mousemove', (event) => {
+      const rect = document.getElementById('graph-wrapper').getBoundingClientRect();
+      tooltip.style.left = (event.clientX - rect.left + 12) + 'px';
+      tooltip.style.top  = (event.clientY - rect.top  + 12) + 'px';
+    })
+    .on('mouseleave', () => tooltip.classList.remove('show'));
+
+  // ── Tick ──────────────────────────────────────────────
+  simulation.on('tick', () => {
+    link
+      .attr('x1', d => d.source.x)
+      .attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x)
+      .attr('y2', d => d.target.y);
+
+    node.attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+}
+
+function renderFallbackGraph() {
+  // Minimal static demo graph when API is offline
+  const mockData = {
+    nodes: [
+      { id:'user_001', username:'patient_zero', follower_count:23000, is_influencer:true, is_patient_zero:true, color:'#ff2d2d', role:'patient_zero', size:20 },
+      { id:'user_002', username:'influencer_A', follower_count:180000, is_influencer:true, is_patient_zero:false, color:'#ff8c00', role:'influencer', size:14 },
+      { id:'user_003', username:'influencer_B', follower_count:95000, is_influencer:true, is_patient_zero:false, color:'#ff8c00', role:'influencer', size:14 },
+      ...Array.from({length:10}, (_,i) => ({
+        id:`user_${i+10}`, username:`user${i+10}`,
+        follower_count: Math.floor(Math.random()*3000)+50,
+        is_influencer:false, is_patient_zero:false,
+        color:'#e84545', role:'spreader', size:8
+      }))
+    ],
+    links: [
+      {source:'user_002', target:'user_001', story_id:'STORY_001'},
+      {source:'user_003', target:'user_001', story_id:'STORY_001'},
+      ...Array.from({length:10}, (_,i) => ({
+        source:`user_${i+10}`,
+        target: i < 5 ? 'user_002' : 'user_003',
+        story_id:'STORY_001'
+      }))
+    ]
+  };
+  renderGraph(mockData);
+}
+
+// ── Graph filter buttons ───────────────────────────────────
+function filterGraph(storyId, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadGraph(storyId);
+  if (storyId) loadPatientZero(storyId);
+}
+
+// ── Patient Zero Panel ─────────────────────────────────────
+async function loadPatientZero(storyId) {
+  try {
+    const data = await apiFetch(`/api/patient-zero/${storyId}`);
+    renderPatientZeroPanel(data);
+  } catch(e) {
+    console.warn('Patient zero load failed:', e);
+  }
+}
+
+function renderPatientZeroPanel(data) {
+  const panel = document.getElementById('pz-panel');
+  const pz = data.patient_zero;
+  const chain = data.propagation_chain || [];
+
+  const chainHtml = chain.slice(0, 6).map((uid, i) => `
+    ${i > 0 ? '<span class="chain-arrow">→</span>' : ''}
+    <span class="chain-node ${i === 0 ? 'origin' : ''}">${uid}</span>
+  `).join('');
+
+  panel.innerHTML = `
+    <div class="pz-header">
+      <span class="pz-icon">⚡</span>
+      Patient Zero Identified
+    </div>
+    <div class="pz-row">
+      <span class="pz-row-label">Author</span>
+      <span class="pz-row-val red">@${pz.username || pz.user_id}</span>
+    </div>
+    <div class="pz-row">
+      <span class="pz-row-label">Post ID</span>
+      <span class="pz-row-val">${pz.post_id}</span>
+    </div>
+    <div class="pz-row">
+      <span class="pz-row-label">Propagation Depth</span>
+      <span class="pz-row-val red">${data.max_hops} hops</span>
+    </div>
+    <div class="pz-row">
+      <span class="pz-row-label">Followers</span>
+      <span class="pz-row-val">${(pz.follower_count||0).toLocaleString()}</span>
+    </div>
+    <div class="pz-content">${escHtml((pz.content||'').slice(0, 120))}...</div>
+    <div class="chain-viz">${chainHtml}</div>
+  `;
+
+  panel.classList.add('show');
+}
+
+// ── Analyze Panel ──────────────────────────────────────────
+async function analyzeText() {
+  const input = document.getElementById('analyze-input');
+  const btn   = document.getElementById('analyze-btn');
+  const result= document.getElementById('analyze-result');
+  const text  = input.value.trim();
+
+  if (!text) return;
+
+  btn.disabled = true;
+  btn.textContent = 'Analyzing...';
+  result.classList.remove('show');
+
+  try {
+    const data = await apiPost('/api/analyze', {
+      text,
+      retweet_count: 15,
+      like_count: 80,
+      reply_count: 12,
+      author_follower_count: 5000,
+    });
+
+    const nlp = data.nlp;
+    const vir = data.viral;
+
+    const colorClass = nlp.label === 'misinformation' ? 'misinformation'
+                     : nlp.label === 'panic-inducing'  ? 'panic'
+                     : 'safe';
+
+    const labelColor = nlp.label === 'misinformation' ? 'var(--red)'
+                     : nlp.label === 'panic-inducing'  ? 'var(--orange)'
+                     : 'var(--green)';
+
+    const tierColor = vir.tier === 'Critical' ? 'var(--red)'
+                    : vir.tier === 'High'     ? 'var(--orange)'
+                    : vir.tier === 'Moderate' ? 'var(--yellow)'
+                    : 'var(--green)';
+
+    result.className = `analyze-result show ${colorClass}`;
+    result.innerHTML = `
+      <div class="result-label" style="color:${labelColor}">
+        ${nlp.is_flagged ? '🚨' : '✅'} ${nlp.label.toUpperCase()}
+      </div>
+      <div style="font-size:0.65rem;color:var(--text-dim);margin-bottom:6px;">
+        Confidence: ${(nlp.confidence * 100).toFixed(1)}% · ${nlp.model_used} · ${nlp.latency_ms}ms
+      </div>
+
+      ${Object.entries(nlp.scores).map(([lbl, score]) => `
+        <div class="score-bar-wrap">
+          <div class="score-bar-label">
+            <span>${lbl}</span><span>${(score*100).toFixed(1)}%</span>
+          </div>
+          <div class="score-bar-track">
+            <div class="score-bar-fill" style="width:${score*100}%;background:${
+              lbl === 'misinformation' ? 'var(--red)' :
+              lbl === 'panic-inducing' ? 'var(--orange)' : 'var(--green)'
+            };"></div>
+          </div>
+        </div>
+      `).join('')}
+
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:0.65rem;">
+        Viral Score:
+        <strong style="color:${tierColor}">${vir.score}/100 — ${vir.tier}</strong>
+        <div style="color:var(--text-dim);margin-top:2px;">${vir.recommendation}</div>
+      </div>
+    `;
+
+  } catch(e) {
+    result.className = 'analyze-result show';
+    result.innerHTML = `<span style="color:var(--red)">⚠ API error. Is the backend running at ${API}?</span>`;
+    console.warn(e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Run NLP Analysis';
+  }
+}
+
+// ── Utility ────────────────────────────────────────────────
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Boot ───────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

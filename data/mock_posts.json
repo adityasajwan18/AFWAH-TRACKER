@@ -1,0 +1,1602 @@
+[
+  {
+    "post_id": "fn_primary_001",
+    "author_id": "user_001",
+    "content": "BREAKING: Government secretly adding chemicals to tap water in Jaipur to control population growth. Boil all water immediately! RT to warn your family! #WaterAlert #Exposed",
+    "timestamp": "2026-04-09T06:54:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": null,
+    "is_patient_zero": true,
+    "engagement": {
+      "retweet_count": 2,
+      "like_count": 55,
+      "reply_count": 47
+    }
+  },
+  {
+    "post_id": "fn_cluster_L1_001",
+    "author_id": "user_002",
+    "content": "RT @user_001: BREAKING: Government secretly adding chemicals to tap water in Jaipur to control population growth. ...",
+    "timestamp": "2026-04-09T08:19:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_primary_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 5,
+      "like_count": 435,
+      "reply_count": 200
+    }
+  },
+  {
+    "post_id": "fn_cluster_L1_002",
+    "author_id": "user_003",
+    "content": "RT @user_001: BREAKING: Government secretly adding chemicals to tap water in Jaipur to control population growth. ...",
+    "timestamp": "2026-04-09T07:37:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_primary_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 3,
+      "like_count": 207,
+      "reply_count": 68
+    }
+  },
+  {
+    "post_id": "fn_cluster_L2_001",
+    "author_id": "user_007",
+    "content": "SHOCKING! RT @user_003: RT @user_001: BREAKING: Government secretly adding chemicals to tap water in Jai... #MustShare",
+    "timestamp": "2026-04-09T10:01:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L1_002",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 3,
+      "like_count": 272,
+      "reply_count": 36
+    }
+  },
+  {
+    "post_id": "fn_cluster_L2_002",
+    "author_id": "user_018",
+    "content": "SHOCKING! RT @user_003: RT @user_001: BREAKING: Government secretly adding chemicals to tap water in Jai... #MustShare",
+    "timestamp": "2026-04-09T09:41:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L1_002",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 2,
+      "like_count": 79,
+      "reply_count": 60
+    }
+  },
+  {
+    "post_id": "fn_cluster_L2_003",
+    "author_id": "user_008",
+    "content": "Everyone needs to see this! RT @user_001: BREAKING: Government secretly adding chemicals to tap wa... Please RT!",
+    "timestamp": "2026-04-09T09:45:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L1_002",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 4,
+      "like_count": 57,
+      "reply_count": 17
+    }
+  },
+  {
+    "post_id": "fn_cluster_L2_004",
+    "author_id": "user_006",
+    "content": "Can't believe this is happening in our country. RT: RT @user_001: BREAKING: Government secretly adding chemicals...",
+    "timestamp": "2026-04-09T10:22:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L1_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 85,
+      "reply_count": 36
+    }
+  },
+  {
+    "post_id": "fn_cluster_L2_005",
+    "author_id": "user_025",
+    "content": "Can't believe this is happening in our country. RT: RT @user_001: BREAKING: Government secretly adding chemicals...",
+    "timestamp": "2026-04-09T09:27:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L1_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 3,
+      "like_count": 101,
+      "reply_count": 59
+    }
+  },
+  {
+    "post_id": "fn_cluster_L2_006",
+    "author_id": "user_038",
+    "content": "Everyone needs to see this! RT @user_001: BREAKING: Government secretly adding chemicals to tap wa... Please RT!",
+    "timestamp": "2026-04-09T09:50:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L1_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 3,
+      "like_count": 68,
+      "reply_count": 61
+    }
+  },
+  {
+    "post_id": "fn_cluster_L2_007",
+    "author_id": "user_020",
+    "content": "Can't believe this is happening in our country. RT: RT @user_001: BREAKING: Government secretly adding chemicals...",
+    "timestamp": "2026-04-09T08:51:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L1_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 2,
+      "like_count": 77,
+      "reply_count": 35
+    }
+  },
+  {
+    "post_id": "fn_cluster_L2_008",
+    "author_id": "user_011",
+    "content": "Everyone needs to see this! RT @user_001: BREAKING: Government secretly adding chemicals to tap wa... Please RT!",
+    "timestamp": "2026-04-09T10:23:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L1_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 1,
+      "like_count": 139,
+      "reply_count": 56
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_001",
+    "author_id": "user_040",
+    "content": "My neighbor just told me about this. This is REAL. SHOCKING! RT @user_003: RT @user_001: BREAKING: Government s...",
+    "timestamp": "2026-04-09T13:22:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 79,
+      "reply_count": 16
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_002",
+    "author_id": "user_005",
+    "content": "My friend just told me about this. This is REAL. Everyone needs to see this! RT @user_001: BREAKING: Governme...",
+    "timestamp": "2026-04-09T10:09:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_003",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 13,
+      "reply_count": 20
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_003",
+    "author_id": "user_013",
+    "content": "Sharing for awareness. Don't let them silence this information! #Exposed",
+    "timestamp": "2026-04-09T12:43:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_002",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 77,
+      "reply_count": 8
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_004",
+    "author_id": "user_022",
+    "content": "Sharing for awareness. Don't let them silence this information! #Exposed",
+    "timestamp": "2026-04-09T12:49:12.391517",
+    "platform": "WhatsApp_Forward",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 79,
+      "reply_count": 19
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_005",
+    "author_id": "user_004",
+    "content": "The media won't cover this. That's why WE must share it. Everyone needs to see this! RT @user_001: BREAKING...",
+    "timestamp": "2026-04-09T11:06:12.391517",
+    "platform": "WhatsApp_Forward",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_006",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 45,
+      "reply_count": 8
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_006",
+    "author_id": "user_036",
+    "content": "The media won't cover this. That's why WE must share it. Can't believe this is happening in our country. RT...",
+    "timestamp": "2026-04-09T11:18:12.391517",
+    "platform": "WhatsApp_Forward",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_005",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 43,
+      "reply_count": 15
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_007",
+    "author_id": "user_016",
+    "content": "My mother just told me about this. This is REAL. Everyone needs to see this! RT @user_001: BREAKING: Governme...",
+    "timestamp": "2026-04-09T13:12:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_006",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 84,
+      "reply_count": 19
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_008",
+    "author_id": "user_024",
+    "content": "My friend just told me about this. This is REAL. SHOCKING! RT @user_003: RT @user_001: BREAKING: Government s...",
+    "timestamp": "2026-04-09T10:09:12.391517",
+    "platform": "WhatsApp_Forward",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_002",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 38,
+      "reply_count": 5
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_009",
+    "author_id": "user_017",
+    "content": "My mother just told me about this. This is REAL. Everyone needs to see this! RT @user_001: BREAKING: Governme...",
+    "timestamp": "2026-04-09T13:45:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_006",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 41,
+      "reply_count": 6
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_010",
+    "author_id": "user_023",
+    "content": "The media won't cover this. That's why WE must share it. Everyone needs to see this! RT @user_001: BREAKING...",
+    "timestamp": "2026-04-09T14:06:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_008",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 83,
+      "reply_count": 26
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_011",
+    "author_id": "user_028",
+    "content": "Sharing for awareness. Don't let them silence this information! #Exposed",
+    "timestamp": "2026-04-09T13:01:12.391517",
+    "platform": "WhatsApp_Forward",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 18,
+      "reply_count": 29
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_012",
+    "author_id": "user_026",
+    "content": "My mother just told me about this. This is REAL. Everyone needs to see this! RT @user_001: BREAKING: Governme...",
+    "timestamp": "2026-04-09T11:02:12.391517",
+    "platform": "WhatsApp_Forward",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_003",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 75,
+      "reply_count": 5
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_013",
+    "author_id": "user_012",
+    "content": "My friend just told me about this. This is REAL. Can't believe this is happening in our country. RT: RT @user...",
+    "timestamp": "2026-04-09T10:49:12.391517",
+    "platform": "WhatsApp_Forward",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_005",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 48,
+      "reply_count": 7
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_014",
+    "author_id": "user_014",
+    "content": "Sharing for awareness. Don't let them silence this information! #Exposed",
+    "timestamp": "2026-04-09T11:46:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_005",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 16,
+      "reply_count": 21
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_015",
+    "author_id": "user_027",
+    "content": "My neighbor just told me about this. This is REAL. Can't believe this is happening in our country. RT: RT @user...",
+    "timestamp": "2026-04-09T12:33:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_007",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 47,
+      "reply_count": 25
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_016",
+    "author_id": "user_010",
+    "content": "My neighbor just told me about this. This is REAL. Everyone needs to see this! RT @user_001: BREAKING: Governme...",
+    "timestamp": "2026-04-09T12:38:12.391517",
+    "platform": "WhatsApp_Forward",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_003",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 61,
+      "reply_count": 18
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_017",
+    "author_id": "user_035",
+    "content": "My mother just told me about this. This is REAL. Can't believe this is happening in our country. RT: RT @user...",
+    "timestamp": "2026-04-09T11:24:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_007",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 93,
+      "reply_count": 29
+    }
+  },
+  {
+    "post_id": "fn_cluster_L3_018",
+    "author_id": "user_031",
+    "content": "Sharing for awareness. Don't let them silence this information! #Exposed",
+    "timestamp": "2026-04-09T12:14:12.391517",
+    "platform": "WhatsApp_Forward",
+    "label": "misinformation",
+    "story_id": "STORY_001",
+    "is_retweet_of_id": "fn_cluster_L2_003",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 75,
+      "reply_count": 5
+    }
+  },
+  {
+    "post_id": "fn_story2_001",
+    "author_id": "user_028",
+    "content": "LEAKED: Internal memo from SpeedLink shows they knew their 5G rollout causes neurological damage. Share everywhere before this gets taken down!",
+    "timestamp": "2026-04-09T11:16:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_002",
+    "is_retweet_of_id": null,
+    "is_patient_zero": true,
+    "engagement": {
+      "retweet_count": 9,
+      "like_count": 99,
+      "reply_count": 21
+    }
+  },
+  {
+    "post_id": "fn_story2_002",
+    "author_id": "user_009",
+    "content": "Scientists CONFIRM: 5G towers in Chennai are causing sudden memory loss in residents under 40. The WHO is covering it up. #5GDanger",
+    "timestamp": "2026-04-09T15:08:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_002",
+    "is_retweet_of_id": "fn_story2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 98,
+      "reply_count": 48
+    }
+  },
+  {
+    "post_id": "fn_story2_003",
+    "author_id": "user_003",
+    "content": "Scientists CONFIRM: 5G towers in Kolkata are causing sudden memory loss in residents under 40. The WHO is covering it up. #5GDanger",
+    "timestamp": "2026-04-09T18:21:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_002",
+    "is_retweet_of_id": "fn_story2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 180,
+      "reply_count": 28
+    }
+  },
+  {
+    "post_id": "fn_story2_004",
+    "author_id": "user_020",
+    "content": "LEAKED: Internal memo from SpeedLink shows they knew their 5G rollout causes neurological damage. Share everywhere before this gets taken down!",
+    "timestamp": "2026-04-09T18:19:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_002",
+    "is_retweet_of_id": "fn_story2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 198,
+      "reply_count": 12
+    }
+  },
+  {
+    "post_id": "fn_story2_005",
+    "author_id": "user_024",
+    "content": "LEAKED: Internal memo from NetWave shows they knew their 5G rollout causes neurological damage. Share everywhere before this gets taken down!",
+    "timestamp": "2026-04-09T10:12:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_002",
+    "is_retweet_of_id": "fn_story2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 177,
+      "reply_count": 46
+    }
+  },
+  {
+    "post_id": "fn_story2_006",
+    "author_id": "user_038",
+    "content": "Scientists CONFIRM: 5G towers in Kolkata are causing sudden memory loss in residents under 40. The WHO is covering it up. #5GDanger",
+    "timestamp": "2026-04-09T08:51:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_002",
+    "is_retweet_of_id": "fn_story2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 73,
+      "reply_count": 55
+    }
+  },
+  {
+    "post_id": "fn_story2_007",
+    "author_id": "user_023",
+    "content": "LEAKED: Internal memo from SpeedLink shows they knew their 5G rollout causes neurological damage. Share everywhere before this gets taken down!",
+    "timestamp": "2026-04-09T16:43:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_002",
+    "is_retweet_of_id": "fn_story2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 114,
+      "reply_count": 23
+    }
+  },
+  {
+    "post_id": "fn_story2_008",
+    "author_id": "user_014",
+    "content": "LEAKED: Internal memo from NetWave shows they knew their 5G rollout causes neurological damage. Share everywhere before this gets taken down!",
+    "timestamp": "2026-04-10T01:23:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_002",
+    "is_retweet_of_id": "fn_story2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 17,
+      "reply_count": 26
+    }
+  },
+  {
+    "post_id": "fn_story2_009",
+    "author_id": "user_016",
+    "content": "LEAKED: Internal memo from SpeedLink shows they knew their 5G rollout causes neurological damage. Share everywhere before this gets taken down!",
+    "timestamp": "2026-04-09T18:36:12.391517",
+    "platform": "Reddit",
+    "label": "misinformation",
+    "story_id": "STORY_002",
+    "is_retweet_of_id": "fn_story2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 107,
+      "reply_count": 19
+    }
+  },
+  {
+    "post_id": "fn_story2_010",
+    "author_id": "user_022",
+    "content": "Scientists CONFIRM: 5G towers in Jaipur are causing sudden memory loss in residents under 40. The WHO is covering it up. #5GDanger",
+    "timestamp": "2026-04-09T21:10:12.391517",
+    "platform": "X",
+    "label": "misinformation",
+    "story_id": "STORY_002",
+    "is_retweet_of_id": "fn_story2_001",
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 129,
+      "reply_count": 46
+    }
+  },
+  {
+    "post_id": "panic_001",
+    "author_id": "user_017",
+    "content": "Multiple people reportedly admitted to Apollo with unknown symptoms. Health authorities have been alerted. Awaiting official statement. #HealthAlert",
+    "timestamp": "2026-04-10T08:54:12.391517",
+    "platform": "Reddit",
+    "label": "panic-inducing",
+    "story_id": "STORY_003",
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 270,
+      "reply_count": 28
+    }
+  },
+  {
+    "post_id": "panic_002",
+    "author_id": "user_024",
+    "content": "Multiple people reportedly admitted to Manipal with unknown symptoms. Health authorities have been alerted. Awaiting official statement. #HealthAlert",
+    "timestamp": "2026-04-10T00:54:12.391517",
+    "platform": "Reddit",
+    "label": "panic-inducing",
+    "story_id": "STORY_003",
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 192,
+      "reply_count": 18
+    }
+  },
+  {
+    "post_id": "panic_003",
+    "author_id": "user_011",
+    "content": "Multiple people reportedly admitted to Manipal with unknown symptoms. Health authorities have been alerted. Awaiting official statement. #HealthAlert",
+    "timestamp": "2026-04-10T02:54:12.391517",
+    "platform": "Reddit",
+    "label": "panic-inducing",
+    "story_id": "STORY_003",
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 249,
+      "reply_count": 17
+    }
+  },
+  {
+    "post_id": "panic_004",
+    "author_id": "user_008",
+    "content": "Multiple people reportedly admitted to AIIMS with unknown symptoms. Health authorities have been alerted. Awaiting official statement. #HealthAlert",
+    "timestamp": "2026-04-09T13:54:12.391517",
+    "platform": "X",
+    "label": "panic-inducing",
+    "story_id": "STORY_003",
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 181,
+      "reply_count": 30
+    }
+  },
+  {
+    "post_id": "panic_005",
+    "author_id": "user_038",
+    "content": "Hospital sources say a new respiratory virus has been detected in Chennai. Officials have NOT confirmed it publicly yet. Stay alert and avoid crowded spaces.",
+    "timestamp": "2026-04-10T10:54:12.391517",
+    "platform": "X",
+    "label": "panic-inducing",
+    "story_id": "STORY_003",
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 169,
+      "reply_count": 31
+    }
+  },
+  {
+    "post_id": "panic_006",
+    "author_id": "user_020",
+    "content": "Multiple people reportedly admitted to Manipal with unknown symptoms. Health authorities have been alerted. Awaiting official statement. #HealthAlert",
+    "timestamp": "2026-04-10T07:54:12.391517",
+    "platform": "X",
+    "label": "panic-inducing",
+    "story_id": "STORY_003",
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 175,
+      "reply_count": 25
+    }
+  },
+  {
+    "post_id": "panic_007",
+    "author_id": "user_007",
+    "content": "Hospital sources say a new respiratory virus has been detected in Kolkata. Officials have NOT confirmed it publicly yet. Stay alert and avoid crowded spaces.",
+    "timestamp": "2026-04-09T18:54:12.391517",
+    "platform": "X",
+    "label": "panic-inducing",
+    "story_id": "STORY_003",
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 100,
+      "reply_count": 15
+    }
+  },
+  {
+    "post_id": "panic_008",
+    "author_id": "user_002",
+    "content": "Multiple people reportedly admitted to Fortis with unknown symptoms. Health authorities have been alerted. Awaiting official statement. #HealthAlert",
+    "timestamp": "2026-04-10T00:54:12.391517",
+    "platform": "X",
+    "label": "panic-inducing",
+    "story_id": "STORY_003",
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 104,
+      "reply_count": 54
+    }
+  },
+  {
+    "post_id": "panic_009",
+    "author_id": "user_035",
+    "content": "Multiple people reportedly admitted to Apollo with unknown symptoms. Health authorities have been alerted. Awaiting official statement. #HealthAlert",
+    "timestamp": "2026-04-10T06:54:12.391517",
+    "platform": "X",
+    "label": "panic-inducing",
+    "story_id": "STORY_003",
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 157,
+      "reply_count": 88
+    }
+  },
+  {
+    "post_id": "panic_010",
+    "author_id": "user_019",
+    "content": "Hospital sources say a new respiratory virus has been detected in Jaipur. Officials have NOT confirmed it publicly yet. Stay alert and avoid crowded spaces.",
+    "timestamp": "2026-04-09T12:54:12.391517",
+    "platform": "Reddit",
+    "label": "panic-inducing",
+    "story_id": "STORY_003",
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 225,
+      "reply_count": 85
+    }
+  },
+  {
+    "post_id": "safe_001",
+    "author_id": "user_002",
+    "content": "Just had amazing kebabs at a local spot in Hyderabad. Totally worth it! 🍽️",
+    "timestamp": "2026-04-10T00:46:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 81,
+      "reply_count": 30
+    }
+  },
+  {
+    "post_id": "safe_002",
+    "author_id": "user_004",
+    "content": "Can someone recommend a good tax consultant in Kolkata? Looking for genuine reviews.",
+    "timestamp": "2026-04-11T04:52:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 101,
+      "reply_count": 5
+    }
+  },
+  {
+    "post_id": "safe_003",
+    "author_id": "user_011",
+    "content": "The startup ecosystem in Kolkata is booming. Met 3 incredible founders today at a networking event.",
+    "timestamp": "2026-04-10T04:48:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 83,
+      "reply_count": 3
+    }
+  },
+  {
+    "post_id": "safe_004",
+    "author_id": "user_005",
+    "content": "Just donated to Goonj for flood relief. Every rupee counts. Please share! ❤️",
+    "timestamp": "2026-04-10T01:16:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 2,
+      "reply_count": 29
+    }
+  },
+  {
+    "post_id": "safe_005",
+    "author_id": "user_031",
+    "content": "Spotted a beautiful sunbird near Cubbon Park this morning. Nature is healing! 🐦",
+    "timestamp": "2026-04-10T01:37:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 75,
+      "reply_count": 1
+    }
+  },
+  {
+    "post_id": "safe_006",
+    "author_id": "user_035",
+    "content": "Great match last night! CSK absolutely dominated. What a performance! 🏏 #Cricket",
+    "timestamp": "2026-04-11T01:19:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 33,
+      "reply_count": 5
+    }
+  },
+  {
+    "post_id": "safe_007",
+    "author_id": "user_033",
+    "content": "Absolutely love how Kolkata is upgrading its public transport. The new metro extension is a game-changer!",
+    "timestamp": "2026-04-10T01:14:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 142,
+      "reply_count": 23
+    }
+  },
+  {
+    "post_id": "safe_008",
+    "author_id": "user_001",
+    "content": "Reminder: The PyConf India registration closes tomorrow. Don't miss it! Link in bio.",
+    "timestamp": "2026-04-09T12:44:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 29,
+      "reply_count": 8
+    }
+  },
+  {
+    "post_id": "safe_009",
+    "author_id": "user_035",
+    "content": "Great match last night! CSK absolutely dominated. What a performance! 🏏 #Cricket",
+    "timestamp": "2026-04-09T08:56:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 55,
+      "reply_count": 28
+    }
+  },
+  {
+    "post_id": "safe_010",
+    "author_id": "user_019",
+    "content": "Today marks 17 years of Indian independence. Jai Hind! 🇮🇳 #ProudIndian",
+    "timestamp": "2026-04-10T11:09:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 17,
+      "reply_count": 35
+    }
+  },
+  {
+    "post_id": "safe_011",
+    "author_id": "user_003",
+    "content": "Traffic on the expressway is terrible today. Someone please fix the infrastructure! 😤 #CityProblems",
+    "timestamp": "2026-04-09T20:31:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 67,
+      "reply_count": 3
+    }
+  },
+  {
+    "post_id": "safe_012",
+    "author_id": "user_021",
+    "content": "Reminder: The TechFest registration closes tomorrow. Don't miss it! Link in bio.",
+    "timestamp": "2026-04-09T15:41:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 27,
+      "reply_count": 31
+    }
+  },
+  {
+    "post_id": "safe_013",
+    "author_id": "user_025",
+    "content": "Power cut for the third time this week in Salt Lake. Completely unacceptable. @TATAPower",
+    "timestamp": "2026-04-11T04:52:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 58,
+      "reply_count": 26
+    }
+  },
+  {
+    "post_id": "safe_014",
+    "author_id": "user_020",
+    "content": "Power cut for the third time this week in Koramangala. Completely unacceptable. @MahaDiscom",
+    "timestamp": "2026-04-10T04:46:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 150,
+      "reply_count": 35
+    }
+  },
+  {
+    "post_id": "safe_015",
+    "author_id": "user_018",
+    "content": "The startup ecosystem in Mumbai is booming. Met 3 incredible founders today at a networking event.",
+    "timestamp": "2026-04-10T18:15:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 146,
+      "reply_count": 14
+    }
+  },
+  {
+    "post_id": "safe_016",
+    "author_id": "user_003",
+    "content": "Spotted a beautiful kingfisher near Cubbon Park this morning. Nature is healing! 🐦",
+    "timestamp": "2026-04-10T10:48:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 96,
+      "reply_count": 26
+    }
+  },
+  {
+    "post_id": "safe_017",
+    "author_id": "user_011",
+    "content": "Finally finished reading 'A Suitable Boy'. Highly recommend it to everyone who loves literary fiction.",
+    "timestamp": "2026-04-10T12:15:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 131,
+      "reply_count": 7
+    }
+  },
+  {
+    "post_id": "safe_018",
+    "author_id": "user_006",
+    "content": "The weather in Hyderabad has been insane lately. Anyone else struggling with the heat? ☀️",
+    "timestamp": "2026-04-10T05:21:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 110,
+      "reply_count": 11
+    }
+  },
+  {
+    "post_id": "safe_019",
+    "author_id": "user_012",
+    "content": "Spotted a beautiful kingfisher near Sanjay Gandhi NP this morning. Nature is healing! 🐦",
+    "timestamp": "2026-04-09T15:18:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 83,
+      "reply_count": 10
+    }
+  },
+  {
+    "post_id": "safe_020",
+    "author_id": "user_036",
+    "content": "Today marks 68 years of Indian independence. Jai Hind! 🇮🇳 #ProudIndian",
+    "timestamp": "2026-04-10T22:23:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 89,
+      "reply_count": 22
+    }
+  },
+  {
+    "post_id": "safe_021",
+    "author_id": "user_020",
+    "content": "The startup ecosystem in Bengaluru is booming. Met 3 incredible founders today at a networking event.",
+    "timestamp": "2026-04-11T05:46:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 113,
+      "reply_count": 40
+    }
+  },
+  {
+    "post_id": "safe_022",
+    "author_id": "user_002",
+    "content": "Great match last night! India U-19 absolutely dominated. What a performance! 🏏 #Cricket",
+    "timestamp": "2026-04-10T02:44:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 82,
+      "reply_count": 38
+    }
+  },
+  {
+    "post_id": "safe_023",
+    "author_id": "user_026",
+    "content": "Finally finished reading 'The White Tiger'. Highly recommend it to everyone who loves social commentary.",
+    "timestamp": "2026-04-10T13:26:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 85,
+      "reply_count": 4
+    }
+  },
+  {
+    "post_id": "safe_024",
+    "author_id": "user_032",
+    "content": "Spotted a beautiful Indian roller near Cubbon Park this morning. Nature is healing! 🐦",
+    "timestamp": "2026-04-10T04:00:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 108,
+      "reply_count": 32
+    }
+  },
+  {
+    "post_id": "safe_025",
+    "author_id": "user_029",
+    "content": "Just donated to Goonj for flood relief. Every rupee counts. Please share! ❤️",
+    "timestamp": "2026-04-10T05:55:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 46,
+      "reply_count": 39
+    }
+  },
+  {
+    "post_id": "safe_026",
+    "author_id": "user_013",
+    "content": "Power cut for the third time this week in Banjara Hills. Completely unacceptable. @CEL_India",
+    "timestamp": "2026-04-09T17:40:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 128,
+      "reply_count": 33
+    }
+  },
+  {
+    "post_id": "safe_027",
+    "author_id": "user_001",
+    "content": "Today marks 56 years of Indian independence. Jai Hind! 🇮🇳 #ProudIndian",
+    "timestamp": "2026-04-10T09:04:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 56,
+      "reply_count": 28
+    }
+  },
+  {
+    "post_id": "safe_028",
+    "author_id": "user_017",
+    "content": "Just had amazing biryani at a local spot in Kolkata. Totally worth it! 🍽️",
+    "timestamp": "2026-04-10T05:53:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 120,
+      "reply_count": 28
+    }
+  },
+  {
+    "post_id": "safe_029",
+    "author_id": "user_009",
+    "content": "RBI's new policy on gold bonds is going to impact millions. Time to review your finances.",
+    "timestamp": "2026-04-10T21:54:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 137,
+      "reply_count": 1
+    }
+  },
+  {
+    "post_id": "safe_030",
+    "author_id": "user_034",
+    "content": "New study shows that walking 8000 steps can significantly improve mental health. Worth trying!",
+    "timestamp": "2026-04-10T23:26:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 11,
+      "reply_count": 40
+    }
+  },
+  {
+    "post_id": "safe_031",
+    "author_id": "user_005",
+    "content": "Great match last night! Mumbai Indians absolutely dominated. What a performance! 🏏 #Cricket",
+    "timestamp": "2026-04-10T07:17:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 117,
+      "reply_count": 2
+    }
+  },
+  {
+    "post_id": "safe_032",
+    "author_id": "user_038",
+    "content": "Just had amazing biryani at a local spot in Chennai. Totally worth it! 🍽️",
+    "timestamp": "2026-04-10T01:06:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 112,
+      "reply_count": 24
+    }
+  },
+  {
+    "post_id": "safe_033",
+    "author_id": "user_026",
+    "content": "Power cut for the third time this week in Banjara Hills. Completely unacceptable. @CEL_India",
+    "timestamp": "2026-04-10T04:05:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 113,
+      "reply_count": 22
+    }
+  },
+  {
+    "post_id": "safe_034",
+    "author_id": "user_007",
+    "content": "Absolutely love how Pune is upgrading its public transport. The new metro extension is a game-changer!",
+    "timestamp": "2026-04-10T10:56:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 98,
+      "reply_count": 36
+    }
+  },
+  {
+    "post_id": "safe_035",
+    "author_id": "user_038",
+    "content": "Finally finished reading 'A Suitable Boy'. Highly recommend it to everyone who loves thriller.",
+    "timestamp": "2026-04-09T09:32:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 67,
+      "reply_count": 16
+    }
+  },
+  {
+    "post_id": "safe_036",
+    "author_id": "user_012",
+    "content": "Traffic on NH-48 is terrible today. Someone please fix the infrastructure! 😤 #CityProblems",
+    "timestamp": "2026-04-11T04:22:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 44,
+      "reply_count": 23
+    }
+  },
+  {
+    "post_id": "safe_037",
+    "author_id": "user_029",
+    "content": "The weather in Chennai has been insane lately. Anyone else struggling with the heat? ☀️",
+    "timestamp": "2026-04-10T15:08:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 32,
+      "reply_count": 20
+    }
+  },
+  {
+    "post_id": "safe_038",
+    "author_id": "user_017",
+    "content": "Power cut for the third time this week in Banjara Hills. Completely unacceptable. @MahaDiscom",
+    "timestamp": "2026-04-10T23:58:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 132,
+      "reply_count": 18
+    }
+  },
+  {
+    "post_id": "safe_039",
+    "author_id": "user_020",
+    "content": "Traffic on Brigade Road is terrible today. Someone please fix the infrastructure! 😤 #CityProblems",
+    "timestamp": "2026-04-09T12:10:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 7,
+      "reply_count": 31
+    }
+  },
+  {
+    "post_id": "safe_040",
+    "author_id": "user_019",
+    "content": "Great match last night! India U-19 absolutely dominated. What a performance! 🏏 #Cricket",
+    "timestamp": "2026-04-10T23:28:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 88,
+      "reply_count": 25
+    }
+  },
+  {
+    "post_id": "safe_041",
+    "author_id": "user_019",
+    "content": "Just donated to HelpAge India for flood relief. Every rupee counts. Please share! ❤️",
+    "timestamp": "2026-04-09T15:42:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 48,
+      "reply_count": 10
+    }
+  },
+  {
+    "post_id": "safe_042",
+    "author_id": "user_006",
+    "content": "Power cut for the third time this week in Koramangala. Completely unacceptable. @CEL_India",
+    "timestamp": "2026-04-10T14:26:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 27,
+      "reply_count": 27
+    }
+  },
+  {
+    "post_id": "safe_043",
+    "author_id": "user_008",
+    "content": "Great match last night! Mumbai Indians absolutely dominated. What a performance! 🏏 #Cricket",
+    "timestamp": "2026-04-09T15:50:12.391517",
+    "platform": "X",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 100,
+      "reply_count": 23
+    }
+  },
+  {
+    "post_id": "safe_044",
+    "author_id": "user_024",
+    "content": "Just donated to Goonj for flood relief. Every rupee counts. Please share! ❤️",
+    "timestamp": "2026-04-10T04:29:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 86,
+      "reply_count": 32
+    }
+  },
+  {
+    "post_id": "safe_045",
+    "author_id": "user_030",
+    "content": "Power cut for the third time this week in Sector 14. Completely unacceptable. @TATAPower",
+    "timestamp": "2026-04-10T15:28:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 37,
+      "reply_count": 15
+    }
+  },
+  {
+    "post_id": "safe_046",
+    "author_id": "user_006",
+    "content": "Absolutely love how Mumbai is upgrading its public transport. The new metro extension is a game-changer!",
+    "timestamp": "2026-04-09T09:30:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 80,
+      "reply_count": 11
+    }
+  },
+  {
+    "post_id": "safe_047",
+    "author_id": "user_003",
+    "content": "Spotted a beautiful sunbird near Cubbon Park this morning. Nature is healing! 🐦",
+    "timestamp": "2026-04-10T12:52:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 73,
+      "reply_count": 7
+    }
+  },
+  {
+    "post_id": "safe_048",
+    "author_id": "user_031",
+    "content": "Spotted a beautiful Indian roller near Sanjay Gandhi NP this morning. Nature is healing! 🐦",
+    "timestamp": "2026-04-10T19:37:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 35,
+      "reply_count": 6
+    }
+  },
+  {
+    "post_id": "safe_049",
+    "author_id": "user_035",
+    "content": "New study shows that walking 8000 steps can significantly improve mental health. Worth trying!",
+    "timestamp": "2026-04-10T22:41:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 51,
+      "reply_count": 18
+    }
+  },
+  {
+    "post_id": "safe_050",
+    "author_id": "user_014",
+    "content": "The startup ecosystem in Delhi is booming. Met 3 incredible founders today at a networking event.",
+    "timestamp": "2026-04-10T03:12:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 116,
+      "reply_count": 34
+    }
+  },
+  {
+    "post_id": "safe_051",
+    "author_id": "user_032",
+    "content": "RBI's new policy on mutual fund regulations is going to impact millions. Time to review your finances.",
+    "timestamp": "2026-04-10T16:25:12.391517",
+    "platform": "Reddit",
+    "label": "safe",
+    "story_id": null,
+    "is_retweet_of_id": null,
+    "is_patient_zero": false,
+    "engagement": {
+      "retweet_count": 0,
+      "like_count": 109,
+      "reply_count": 32
+    }
+  }
+]
