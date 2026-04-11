@@ -2,6 +2,7 @@
 # backend/api/routes/analyze.py
 #
 # POST /api/analyze  — NLP Classification + Viral Score
+# POST /api/fact-check — Rumor Credibility Analysis
 # ─────────────────────────────────────────────────────
 # The core endpoint. Takes post text + metadata,
 # runs NLP classification and viral score, returns results.
@@ -10,13 +11,29 @@
 import logging
 from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 
 from backend.core.models import AnalyzeRequest, AnalyzeResponse
 from backend.ml.classifier import classify_text
+from backend.ml.rumor_analyzer import analyze_rumor
 from backend.utils.viral_score import calculate_viral_score
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
+
+
+class FactCheckRequest(BaseModel):
+    claim: str
+
+
+class FactCheckResponse(BaseModel):
+    credibility_score: int
+    confidence: float
+    sentiment: str
+    markers: list
+    details: str
+    similar_claims: list = []  # NEW: Similar claims from history
+    analyzed_at: datetime
 
 
 @router.post(
@@ -76,3 +93,52 @@ async def analyze_post(request: AnalyzeRequest) -> AnalyzeResponse:
         viral=viral_result,
         analyzed_at=datetime.now(timezone.utc),
     )
+
+
+@router.post(
+    "/fact-check",
+    response_model=FactCheckResponse,
+    summary="Fact-check a rumor or claim",
+    description="""
+    Analyzes a rumor or claim for credibility,sentiment, and misinformation markers.
+    
+    Returns:
+    - **credibility_score**: 0-100 (higher = more credible)
+    - **confidence**: 0-1 (analysis confidence)
+    - **sentiment**: positive, negative, neutral
+    - **markers**: List of detected patterns
+    - **details**: Detailed analysis explanation
+    """,
+)
+async def fact_check_claim(request: FactCheckRequest) -> FactCheckResponse:
+    """
+    Analyze a claim/rumor for credibility and misinformation.
+    """
+    logger.info(f"Fact-checking claim: {request.claim[:60]}...")
+    
+    if not request.claim or len(request.claim.strip()) < 5:
+        raise HTTPException(
+            status_code=400,
+            detail="Claim must be at least 5 characters long"
+        )
+    
+    try:
+        result = analyze_rumor(request.claim)
+        
+        return FactCheckResponse(
+            credibility_score=result["credibility_score"],
+            confidence=result["confidence"],
+            sentiment=result["sentiment"],
+            markers=result["markers"],
+            details=result["details"],
+            similar_claims=result.get("similar_claims", []),  # NEW: Include similar claims
+            analyzed_at=datetime.now(timezone.utc)
+        )
+        
+    except Exception as e:
+        logger.error(f"Fact-check failed: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Fact-check analysis error: {str(e)}",
+        )
+

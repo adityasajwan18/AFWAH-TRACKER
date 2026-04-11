@@ -145,8 +145,8 @@
 
     .kpi {
       background: var(--bg-card);
-      padding: 16px;
-      display: flex; flex-direction: column; gap: 4px;
+      padding: 10px 12px;
+      display: flex; flex-direction: column; gap: 2px;
       cursor: default;
       transition: background var(--transition);
     }
@@ -198,9 +198,9 @@
     .analyze-panel textarea {
       width: 100%; background: var(--bg);
       border: 1px solid var(--border);
-      color: var(--text); font-family: var(--font-mono); font-size: 0.75rem;
-      padding: 10px; border-radius: var(--radius);
-      resize: none; height: 72px; outline: none;
+      color: var(--text); font-family: var(--font-mono); font-size: 0.73rem;
+      padding: 8px; border-radius: var(--radius);
+      resize: none; height: 50px; outline: none;
       transition: border-color var(--transition);
     }
 
@@ -244,6 +244,113 @@
     .score-bar-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
     .score-bar-fill  { height: 100%; border-radius: 2px; transition: width 0.8s ease; }
 
+    /* ── Rumor Fact-Checker Panel ──────────────────────────────*/
+    .rumor-panel {
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    .rumor-panel .panel-title {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    .rumor-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 8px;
+      border-radius: var(--radius);
+      resize: none;
+      height: 55px;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    .rumor-input:focus { border-color: var(--yellow); }
+    .rumor-input::placeholder { color: var(--text-muted); }
+
+    .fact-check-btn {
+      margin-top: 6px;
+      width: 100%;
+      background: var(--yellow);
+      color: #000;
+      border: none;
+      border-radius: var(--radius);
+      padding: 7px 0;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: all var(--transition);
+    }
+
+    .fact-check-btn:hover { 
+      background: #ffed4e;
+      transform: translateY(-1px);
+    }
+
+    .fact-check-btn:active { transform: translateY(0); }
+    .fact-check-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .credibility-result {
+      margin-top: 8px;
+      padding: 10px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      font-size: 0.7rem;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .credibility-result.show { display: block; }
+    
+    .credibility-result.high {
+      border-color: rgba(0,230,118,0.4);
+      background: var(--green-dim);
+    }
+
+    .credibility-result.medium {
+      border-color: rgba(255,215,0,0.4);
+      background: var(--yellow-dim);
+    }
+
+    .credibility-result.low {
+      border-color: rgba(255,45,45,0.4);
+      background: var(--red-dim);
+    }
+
+    .credibility-score-num {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 6px 0;
+      font-family: var(--font-display);
+    }
+
+    .credibility-meter {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 6px 0;
+    }
+
+    .credibility-meter-fill {
+      height: 100%;
+      transition: width 0.8s ease, background 0.3s ease;
+    }
+
     /* ── Image Upload Panel ────────────────────────────────── */
     .image-upload-panel { 
       padding: 14px; 
@@ -264,7 +371,7 @@
     .image-drop-zone {
       border: 2px dashed var(--border);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 10px;
       text-align: center;
       cursor: pointer;
       transition: all var(--transition);
@@ -303,11 +410,11 @@
     }
 
     .image-preview {
-      margin-top: 10px;
+      margin-top: 6px;
       border-radius: var(--radius);
       overflow: hidden;
       border: 1px solid var(--border);
-      max-height: 150px;
+      max-height: 80px;
     }
 
     .image-preview img {
@@ -364,6 +471,11 @@
 
     /* ── Post Feed ─────────────────────────────────────────── */
     .post-feed { flex: 1; overflow-y: auto; }
+
+    .post-feed {
+      max-height: 150px;
+      overflow-y: auto;
+    }
 
     .post-feed::-webkit-scrollbar { width: 4px; }
     .post-feed::-webkit-scrollbar-track { background: transparent; }
@@ -662,6 +774,17 @@
         <div class="analyze-result" id="analyze-result"></div>
       </div>
 
+      <!-- Rumor Fact-Checker Panel -->
+      <div class="rumor-panel">
+        <span class="panel-title">🔍 Fact Check Rumor</span>
+        <textarea id="rumor-input" class="rumor-input"
+          placeholder="Paste any rumor or claim here..."></textarea>
+        <button class="fact-check-btn" id="fact-check-btn" onclick="factCheckRumor()">
+          Analyze Credibility
+        </button>
+        <div class="credibility-result" id="credibility-result"></div>
+      </div>
+
       <!-- Image Upload Panel -->
       <div class="image-upload-panel">
         <span class="panel-title">🖼️ AI Image Detector</span>
@@ -908,6 +1031,30 @@ async function loadGraph(storyId) {
   }
 }
 
+// ── Boundary force to keep nodes within canvas ────────
+function forceBoundary(W, H) {
+  let nodes;
+  const padding = 40;
+  
+  function force() {
+    for (let i = 0, n = nodes.length; i < n; ++i) {
+      const node = nodes[i];
+      
+      // Keep nodes within bounds
+      if (node.x < padding) node.x = padding;
+      if (node.x > W - padding) node.x = W - padding;
+      if (node.y < padding) node.y = padding;
+      if (node.y > H - padding) node.y = H - padding;
+    }
+  }
+  
+  force.initialize = function(_) {
+    nodes = _;
+  };
+  
+  return force;
+}
+
 function renderGraph(data) {
   const svg = d3.select('#graph-svg');
   svg.selectAll('*').remove();
@@ -950,16 +1097,23 @@ function renderGraph(data) {
     return;
   }
 
+  // ── Initialize node positions at center ────────────────
+  nodes.forEach(node => {
+    if (!node.x) node.x = W / 2 + (Math.random() - 0.5) * 100;
+    if (!node.y) node.y = H / 2 + (Math.random() - 0.5) * 100;
+  });
+
   // ── Force simulation ──────────────────────────────────
   simulation = d3.forceSimulation(nodes)
     .force('link', d3.forceLink(links)
       .id(d => d.id)
       .distance(d => 80)
-      .strength(0.6)
+      .strength(0.5)
     )
-    .force('charge', d3.forceManyBody().strength(-280))
-    .force('center', d3.forceCenter(W / 2, H / 2))
-    .force('collision', d3.forceCollide().radius(d => d.size + 6));
+    .force('charge', d3.forceManyBody().strength(-300))
+    .force('center', d3.forceCenter(W / 2, H / 2).strength(0.8))
+    .force('collision', d3.forceCollide().radius(d => d.size + 8))
+    .force('boundary', forceBoundary(W, H));
 
   // ── Links ─────────────────────────────────────────────
   const link = g.append('g').selectAll('line')
@@ -1332,6 +1486,108 @@ async function analyzeImage() {
   } finally {
     btn.disabled = false;
     btn.textContent = 'Analyze Image';
+  }
+}
+
+// ── Fact-Check Rumor ──────────────────────────────────────
+async function factCheckRumor() {
+  const input = document.getElementById('rumor-input');
+  const btn = document.getElementById('fact-check-btn');
+  const result = document.getElementById('credibility-result');
+  const claim = input.value.trim();
+
+  if (!claim) return;
+
+  btn.disabled = true;
+  btn.textContent = 'Analyzing...';
+  result.classList.remove('show');
+
+  try {
+    const data = await apiPost('/api/fact-check', {
+      claim: claim
+    });
+
+    const score = data.credibility_score;
+    const sentiment = data.sentiment;
+    const confidence = data.confidence;
+    
+    // Determine color class
+    let resultClass = 'credibility-result show';
+    let icon = '?';
+    
+    if (score >= 70) {
+      resultClass += ' high';
+      icon = '✓';
+    } else if (score >= 40) {
+      resultClass += ' medium';
+      icon = '?';
+    } else {
+      resultClass += ' low';
+      icon = '✗';
+    }
+
+    // Determine color for meter
+    let meterColor = score >= 70 ? 'var(--green)' : score >= 40 ? 'var(--yellow)' : 'var(--red)';
+
+    let markersHtml = data.markers.map(m => `<li>${escHtml(m)}</li>`).join('');
+    
+    // NEW: Build similar claims section
+    let similarClaimsHtml = '';
+    if (data.similar_claims && data.similar_claims.length > 0) {
+      const similarItems = data.similar_claims.map(claim => `
+        <div style="margin-bottom:6px;padding:4px;background:rgba(255,255,255,0.05);border-left:2px solid var(--yellow);border-radius:2px;">
+          <div style="font-size:0.65rem;color:var(--yellow);">
+            ${claim.similarity}% Match | Score: ${claim.previous_credibility}/100
+          </div>
+          <div style="font-size:0.6rem;color:var(--text-dim);margin-top:2px;">
+            "${escHtml(claim.original_claim.substring(0, 80))}${claim.original_claim.length > 80 ? '...' : ''}"
+          </div>
+        </div>
+      `).join('');
+      
+      similarClaimsHtml = `
+        <div style="margin-top:8px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.1);">
+          <div style="font-size:0.65rem;color:var(--text-dim);margin-bottom:4px;">
+            <strong>🔗 Similar Claims in History:</strong>
+          </div>
+          ${similarItems}
+        </div>
+      `;
+    }
+
+    result.className = resultClass;
+    result.innerHTML = `
+      <div class="result-label" style="margin-bottom:6px;">
+        ${icon} Credibility Analysis
+      </div>
+      <div class="credibility-score-num">
+        ${score}/100 - ${sentiment.toUpperCase()}
+      </div>
+      <div class="credibility-meter">
+        <div class="credibility-meter-fill" style="width:${score}%;background:${meterColor};"></div>
+      </div>
+      <div style="font-size:0.65rem;color:var(--text-dim);margin-bottom:6px;">
+        Analysis Confidence: ${(confidence*100).toFixed(0)}%
+      </div>
+      <div style="font-size:0.7rem;line-height:1.5;white-space:pre-wrap;margin-bottom:6px;">
+        ${escHtml(data.details)}
+      </div>
+      <div style="font-size:0.65rem;">
+        <strong>Detected Patterns:</strong>
+        <ul style="margin:4px 0 0 16px;padding:0;">
+          ${markersHtml}
+        </ul>
+      </div>
+      ${similarClaimsHtml}
+    `;
+
+  } catch(e) {
+    result.className = 'credibility-result show';
+    result.innerHTML = `<span style="color:var(--red);">⚠ Analysis failed: ${escHtml(e.message)}</span>`;
+    console.warn('Fact-check error:', e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Analyze Credibility';
   }
 }
 
