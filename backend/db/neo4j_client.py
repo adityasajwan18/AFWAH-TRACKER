@@ -36,6 +36,7 @@ def get_driver():
         _driver = GraphDatabase.driver(
             settings.NEO4J_URI,
             auth=(settings.NEO4J_USER, settings.NEO4J_PASSWORD),
+            connection_timeout=2.0,  # 2 second timeout for connection
         )
         _driver.verify_connectivity()
         _neo4j_available = True
@@ -44,6 +45,7 @@ def get_driver():
     except Exception as e:
         logger.warning(f"⚠️  Neo4j unavailable: {e}. Using in-memory fallback.")
         _neo4j_available = False
+        _driver = None  # Reset driver on failure
         return None
 
 
@@ -141,22 +143,26 @@ def find_spreaders(story_id: str = "STORY_001") -> list[dict]:
     if not driver:
         return _fallback_spreaders(story_id)
 
-    with driver.session() as session:
-        result = session.run(
-            """
-            MATCH (u:User)-[r:RETWEETED]->(orig:User)
-            WHERE r.story_id = $story_id
-            RETURN DISTINCT
-                u.user_id AS user_id,
-                u.username AS username,
-                u.follower_count AS follower_count,
-                u.is_influencer AS is_influencer,
-                count(r) AS share_count
-            ORDER BY follower_count DESC
-            """,
-            story_id=story_id,
-        )
-        return [dict(record) for record in result]
+    try:
+        with driver.session() as session:
+            result = session.run(
+                """
+                MATCH (u:User)-[r:RETWEETED]->(orig:User)
+                WHERE r.story_id = $story_id
+                RETURN DISTINCT
+                    u.user_id AS user_id,
+                    u.username AS username,
+                    u.follower_count AS follower_count,
+                    u.is_influencer AS is_influencer,
+                    count(r) AS share_count
+                ORDER BY follower_count DESC
+                """,
+                story_id=story_id,
+            )
+            return [dict(record) for record in result]
+    except Exception as e:
+        logger.warning(f"⚠️  Neo4j query failed: {e}. Using fallback data.")
+        return _fallback_spreaders(story_id)
 
 
 def trace_patient_zero(story_id: str = "STORY_001") -> dict:
@@ -168,43 +174,47 @@ def trace_patient_zero(story_id: str = "STORY_001") -> dict:
     if not driver:
         return _fallback_patient_zero(story_id)
 
-    with driver.session() as session:
-        # Find the Patient Zero post for this story
-        pz_result = session.run(
-            """
-            MATCH (u:User)-[:AUTHORED]->(p:Post)
-            WHERE p.story_id = $story_id AND p.is_patient_zero = true
-            RETURN u.user_id AS user_id, u.username AS username,
-                   u.follower_count AS follower_count,
-                   p.post_id AS post_id, p.content AS content,
-                   p.timestamp AS timestamp
-            LIMIT 1
-            """,
-            story_id=story_id,
-        )
-        pz_record = pz_result.single()
-        if not pz_record:
-            return {"error": "Patient zero not found for this story."}
+    try:
+        with driver.session() as session:
+            # Find the Patient Zero post for this story
+            pz_result = session.run(
+                """
+                MATCH (u:User)-[:AUTHORED]->(p:Post)
+                WHERE p.story_id = $story_id AND p.is_patient_zero = true
+                RETURN u.user_id AS user_id, u.username AS username,
+                       u.follower_count AS follower_count,
+                       p.post_id AS post_id, p.content AS content,
+                       p.timestamp AS timestamp
+                LIMIT 1
+                """,
+                story_id=story_id,
+            )
+            pz_record = pz_result.single()
+            if not pz_record:
+                return {"error": "Patient zero not found for this story."}
 
-        # Find the longest propagation chain (shows how far it spread)
-        chain_result = session.run(
-            """
-            MATCH path = (spreader:User)-[:RETWEETED*1..5]->(origin:User)
-            WHERE origin.user_id = $origin_id
-            RETURN [node IN nodes(path) | node.user_id] AS chain,
-                   length(path) AS hops
-            ORDER BY hops DESC
-            LIMIT 1
-            """,
-            origin_id=pz_record["user_id"],
-        )
-        chain_record = chain_result.single()
+            # Find the longest propagation chain (shows how far it spread)
+            chain_result = session.run(
+                """
+                MATCH path = (spreader:User)-[:RETWEETED*1..5]->(origin:User)
+                WHERE origin.user_id = $origin_id
+                RETURN [node IN nodes(path) | node.user_id] AS chain,
+                       length(path) AS hops
+                ORDER BY hops DESC
+                LIMIT 1
+                """,
+                origin_id=pz_record["user_id"],
+            )
+            chain_record = chain_result.single()
 
-        return {
-            "patient_zero": dict(pz_record),
-            "propagation_chain": chain_record["chain"] if chain_record else [],
-            "max_hops": chain_record["hops"] if chain_record else 0,
-        }
+            return {
+                "patient_zero": dict(pz_record),
+                "propagation_chain": chain_record["chain"] if chain_record else [],
+                "max_hops": chain_record["hops"] if chain_record else 0,
+            }
+    except Exception as e:
+        logger.warning(f"⚠️  Neo4j query failed: {e}. Using fallback data.")
+        return _fallback_patient_zero(story_id)
 
 
 def get_graph_data(story_id: Optional[str] = None) -> dict:
@@ -216,47 +226,51 @@ def get_graph_data(story_id: Optional[str] = None) -> dict:
     if not driver:
         return _fallback_graph_data(story_id)
 
-    with driver.session() as session:
-        if story_id:
-            node_query = """
-                MATCH (u:User)-[r:RETWEETED]->(v:User)
-                WHERE r.story_id = $story_id
-                WITH collect(DISTINCT u) + collect(DISTINCT v) AS all_users
-                UNWIND all_users AS u
-                RETURN DISTINCT
-                    u.user_id AS id, u.username AS username,
-                    u.follower_count AS follower_count,
-                    u.is_influencer AS is_influencer
-            """
-            edge_query = """
-                MATCH (u:User)-[r:RETWEETED]->(v:User)
-                WHERE r.story_id = $story_id
-                RETURN u.user_id AS source, v.user_id AS target,
-                       r.story_id AS story_id, r.timestamp AS timestamp
-            """
-        else:
-            node_query = """
-                MATCH (u:User)-[:RETWEETED]->(v:User)
-                WITH collect(DISTINCT u) + collect(DISTINCT v) AS all_users
-                UNWIND all_users AS u
-                RETURN DISTINCT
-                    u.user_id AS id, u.username AS username,
-                    u.follower_count AS follower_count,
-                    u.is_influencer AS is_influencer
-            """
-            edge_query = """
-                MATCH (u:User)-[r:RETWEETED]->(v:User)
-                RETURN u.user_id AS source, v.user_id AS target,
-                       r.story_id AS story_id, r.timestamp AS timestamp
-            """
+    try:
+        with driver.session() as session:
+            if story_id:
+                node_query = """
+                    MATCH (u:User)-[r:RETWEETED]->(v:User)
+                    WHERE r.story_id = $story_id
+                    WITH collect(DISTINCT u) + collect(DISTINCT v) AS all_users
+                    UNWIND all_users AS u
+                    RETURN DISTINCT
+                        u.user_id AS id, u.username AS username,
+                        u.follower_count AS follower_count,
+                        u.is_influencer AS is_influencer
+                """
+                edge_query = """
+                    MATCH (u:User)-[r:RETWEETED]->(v:User)
+                    WHERE r.story_id = $story_id
+                    RETURN u.user_id AS source, v.user_id AS target,
+                           r.story_id AS story_id, r.timestamp AS timestamp
+                """
+            else:
+                node_query = """
+                    MATCH (u:User)-[:RETWEETED]->(v:User)
+                    WITH collect(DISTINCT u) + collect(DISTINCT v) AS all_users
+                    UNWIND all_users AS u
+                    RETURN DISTINCT
+                        u.user_id AS id, u.username AS username,
+                        u.follower_count AS follower_count,
+                        u.is_influencer AS is_influencer
+                """
+                edge_query = """
+                    MATCH (u:User)-[r:RETWEETED]->(v:User)
+                    RETURN u.user_id AS source, v.user_id AS target,
+                           r.story_id AS story_id, r.timestamp AS timestamp
+                """
 
-        nodes_result = session.run(node_query, story_id=story_id or "")
-        edges_result = session.run(edge_query, story_id=story_id or "")
+            nodes_result = session.run(node_query, story_id=story_id or "")
+            edges_result = session.run(edge_query, story_id=story_id or "")
 
-        nodes = [dict(r) for r in nodes_result]
-        links = [dict(r) for r in edges_result]
+            nodes = [dict(r) for r in nodes_result]
+            links = [dict(r) for r in edges_result]
 
-    return _enrich_graph_data(nodes, links, story_id)
+        return _enrich_graph_data(nodes, links, story_id)
+    except Exception as e:
+        logger.warning(f"⚠️  Neo4j query failed: {e}. Using fallback data.")
+        return _fallback_graph_data(story_id)
 
 
 # ── In-Memory Fallbacks ───────────────────────────────────────

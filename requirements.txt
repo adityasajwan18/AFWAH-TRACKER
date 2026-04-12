@@ -43,11 +43,14 @@ spacy==3.7.2              # Advanced NLP (optional for multilingual support)
 
 # --- Social Media Integration ---
 aiohttp==3.9.0            # Async HTTP client for API calls
-tweepy==4.14.0
-,praw==7.7.1               # Reddit API wrapper (optional, for ease)
+tweepy==4.14.0            # Twitter API wrapper
+praw==7.7.1               # Reddit API wrapper
 
 # --- Video/Media Processing ---
-opencv-python==4.9.0.80   ,moviepy==1.0.3,librosa==0.10.0,soundfile==0.12.1         
+opencv-python==4.9.0.80   # Computer vision for deepfake detection
+moviepy==1.0.3            # Video processing
+librosa==0.10.0           # Audio processing for deepfakes
+soundfile==0.12.1         # Audio I/O operations
 
 # --- Dev / Testing ---
 pytest==8.2.0

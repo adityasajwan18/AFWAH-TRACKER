@@ -1,0 +1,275 @@
+{
+  "training_data": [
+    {
+      "text": "The Moon landing in 1969 was faked in a Hollywood studio",
+      "label": 0,
+      "category": "conspiracy",
+      "source": "common_conspiracy",
+      "keywords": ["moon", "fake", "hoax", "studio"]
+    },
+    {
+      "text": "Apollo 11 successfully landed on the Moon on July 20, 1969, with astronauts Neil Armstrong and Buzz Aldrin",
+      "label": 1,
+      "category": "historical_fact",
+      "source": "NASA",
+      "keywords": ["moon", "landing", "apollo", "1969"]
+    },
+    {
+      "text": "5G towers are spreading COVID-19 that's why cases spike where 5G is deployed",
+      "label": 0,
+      "category": "health_misinformation",
+      "source": "viral_false_claim",
+      "keywords": ["5G", "COVID", "virus", "towers"]
+    },
+    {
+      "text": "COVID-19 is caused by a novel coronavirus (SARS-CoV-2) that primarily spreads through respiratory droplets",
+      "label": 1,
+      "category": "health_fact",
+      "source": "WHO",
+      "keywords": ["COVID", "virus", "coronavirus", "respiratory"]
+    },
+    {
+      "text": "Vaccines contain microchips that track your location and thoughts",
+      "label": 0,
+      "category": "vaccine_misinformation",
+      "source": "anti_vax_movement",
+      "keywords": ["vaccine", "microchip", "tracking", "mind"]
+    },
+    {
+      "text": "mRNA vaccines work by teaching cells to make a protein that triggers an immune response against COVID-19",
+      "label": 1,
+      "category": "medical_fact",
+      "source": "CDC",
+      "keywords": ["vaccine", "mRNA", "immune", "COVID"]
+    },
+    {
+      "text": "The Earth is flat and all NASA photos are photoshopped",
+      "label": 0,
+      "category": "conspiracy",
+      "source": "flat_earth_society",
+      "keywords": ["earth", "flat", "NASA", "photoshop"]
+    },
+    {
+      "text": "Earth is an oblate spheroid (roughly spherical) with a radius of approximately 6,371 kilometers",
+      "label": 1,
+      "category": "scientific_fact",
+      "source": "NASA",
+      "keywords": ["earth", "spheroid", "round", "shape"]
+    },
+    {
+      "text": "Climate change is a hoax invented by the Chinese to gain economic advantage",
+      "label": 0,
+      "category": "climate_denial",
+      "source": "climate_denier",
+      "keywords": ["climate", "hoax", "Chinese", "fake"]
+    },
+    {
+      "text": "Global average temperatures have risen approximately 1.1°C since pre-industrial times due to greenhouse gas emissions",
+      "label": 1,
+      "category": "climate_fact",
+      "source": "IPCC",
+      "keywords": ["climate", "temperature", "greenhouse", "emissions"]
+    },
+    {
+      "text": "Princess Diana's death was not an accident but a coordinated assassination by the British royal family",
+      "label": 0,
+      "category": "conspiracy",
+      "source": "conspiracy_theory",
+      "keywords": ["diana", "death", "murder", "royals"]
+    },
+    {
+      "text": "Princess Diana died in a car crash in Paris on August 31, 1997, in the Pont de l'Alma tunnel",
+      "label": 1,
+      "category": "historical_fact",
+      "source": "historical_record",
+      "keywords": ["diana", "died", "1997", "paris"]
+    },
+    {
+      "text": "Bill Gates developed COVID-19 to implant tracking devices in humans through vaccines",
+      "label": 0,
+      "category": "conspiracy",
+      "source": "viral_conspiracy",
+      "keywords": ["gates", "COVID", "tracking", "vaccine"]
+    },
+    {
+      "text": "Bill Gates founded Microsoft and is a major philanthropist through the Bill & Melinda Gates Foundation",
+      "label": 1,
+      "category": "biographical_fact",
+      "source": "public_record",
+      "keywords": ["gates", "microsoft", "philanthropy"]
+    },
+    {
+      "text": "The Holocaust never happened and was invented by Jewish people for financial compensation",
+      "label": 0,
+      "category": "historical_denial",
+      "source": "hate_group",
+      "keywords": ["holocaust", "fake", "jewish"]
+    },
+    {
+      "text": "The Holocaust was the systematic genocide of six million Jews by Nazi Germany during World War II",
+      "label": 1,
+      "category": "historical_fact",
+      "source": "historical_consensus",
+      "keywords": ["holocaust", "genocide", "nazi", "WWII"]
+    },
+    {
+      "text": "Drinking bleach cures autism and other diseases if administered properly",
+      "label": 0,
+      "category": "dangerous_misinformation",
+      "source": "harmful_claim",
+      "keywords": ["bleach", "cure", "autism", "disease"]
+    },
+    {
+      "text": "Autism is a neurodevelopmental disorder with genetic and environmental factors; there is no cure",
+      "label": 1,
+      "category": "medical_fact",
+      "source": "medical_consensus",
+      "keywords": ["autism", "neurodevelopmental", "genetic"]
+    },
+    {
+      "text": "QAnon has revealed that the government is controlled by a secret deep state cabal",
+      "label": 0,
+      "category": "conspiracy",
+      "source": "QAnon",
+      "keywords": ["QAnon", "deep state", "cabal", "secret"]
+    },
+    {
+      "text": "Government operations are conducted by elected officials and their appointed staff according to constitutional processes",
+      "label": 1,
+      "category": "political_fact",
+      "source": "U.S. Constitution",
+      "keywords": ["government", "elected", "officials", "constitutional"]
+    },
+    {
+      "text": "Area 51 houses alien spacecraft and the government is hiding evidence of extraterrestrial life",
+      "label": 0,
+      "category": "conspiracy",
+      "source": "ufo_conspiracy",
+      "keywords": ["area51", "aliens", "UFO", "secret"]
+    },
+    {
+      "text": "Area 51 is a United States Air Force facility located in Nevada used for testing military aircraft",
+      "label": 1,
+      "category": "fact",
+      "source": "declassified_information",
+      "keywords": ["area51", "military", "nevada", "aircraft"]
+    },
+    {
+      "text": "You can get COVID-19 immunity by catching it once, so lockdowns are unnecessary",
+      "label": 0,
+      "category": "health_misinformation",
+      "source": "anti_lockdown",
+      "keywords": ["COVID", "immunity", "lockdown", "unnecessary"]
+    },
+    {
+      "text": "COVID-19 reinfection is possible, and immunity can wane over time, making vaccination important",
+      "label": 1,
+      "category": "health_fact",
+      "source": "medical_research",
+      "keywords": ["COVID", "reinfection", "immunity", "vaccination"]
+    },
+    {
+      "text": "JFK assassination was carried out by a secret government conspiracy, not Lee Harvey Oswald",
+      "label": 0.5,
+      "category": "conspiracy_theory",
+      "source": "historical_debate",
+      "keywords": ["JFK", "assassination", "conspiracy", "oswald"]
+    },
+    {
+      "text": "Ancient Egyptians built the pyramids using alien technology that defies modern engineering",
+      "label": 0,
+      "category": "conspiracy",
+      "source": "ancient_aliens",
+      "keywords": ["pyramids", "aliens", "technology", "egypt"]
+    },
+    {
+      "text": "The Egyptian pyramids were built by ancient Egyptians using contemporary construction techniques",
+      "label": 1,
+      "category": "historical_fact",
+      "source": "archaeology",
+      "keywords": ["pyramids", "egyptians", "construction"]
+    },
+    {
+      "text": "Eleinte chemtrails are poisoning the population with chemicals for population control",
+      "label": 0,
+      "category": "conspiracy",
+      "source": "chemtrail_conspiracy",
+      "keywords": ["chemtrails", "poison", "population", "control"]
+    },
+    {
+      "text": "Aircraft contrails are formed from water vapor in exhaust that condenses at high altitudes",
+      "label": 1,
+      "category": "scientific_fact",
+      "source": "atmospheric_science",
+      "keywords": ["contrails", "water", "vapor", "altitude"]
+    },
+    {
+      "text": "9/11 was an inside job orchestrated by the U.S. government to start wars",
+      "label": 0.5,
+      "category": "conspiracy_theory",
+      "source": "9/11_truther",
+      "keywords": ["9/11", "conspiracy", "government", "inside"]
+    },
+    {
+      "text": "The COVID-19 vaccines will alter your DNA and turn you into something inhuman",
+      "label": 0,
+      "category": "vaccine_misinformation",
+      "source": "anti_vax",
+      "keywords": ["vaccine", "DNA", "alter", "inhuman"]
+    },
+    {
+      "text": "mRNA vaccines do not integrate into human DNA; the mRNA is broken down after use",
+      "label": 1,
+      "category": "medical_fact",
+      "source": "CDC",
+      "keywords": ["vaccine", "mRNA", "DNA", "not integrate"]
+    },
+    {
+      "text": "Prince Harry and Meghan faked their entire relationship for publicity and money",
+      "label": 0,
+      "category": "celebrity_gossip_misinformation",
+      "source": "tabloid_rumor",
+      "keywords": ["prince", "harry", "meghan", "fake"]
+    },
+    {
+      "text": "Fluoride in drinking water is a mind control chemical used by governments",
+      "label": 0,
+      "category": "conspiracy",
+      "source": "conspiracy_theory",
+      "keywords": ["fluoride", "water", "mind control"]
+    },
+    {
+      "text": "Fluoride is added to drinking water in many countries to prevent tooth decay as recommended by dental health organizations",
+      "label": 1,
+      "category": "health_fact",
+      "source": "dental_health",
+      "keywords": ["fluoride", "water", "tooth", "prevention"]
+    }
+  ],
+  "metadata": {
+    "total_samples": 35,
+    "misinformation_samples": 23,
+    "accurate_samples": 10,
+    "mixed_samples": 2,
+    "categories": [
+      "conspiracy",
+      "health_misinformation",
+      "vaccine_misinformation",
+      "climate_denial",
+      "historical_denial",
+      "dangerous_misinformation",
+      "political_conspiracy",
+      "celebrity_gossip_misinformation",
+      "historical_fact",
+      "health_fact",
+      "medical_fact",
+      "scientific_fact",
+      "climate_fact",
+      "biographical_fact",
+      "political_fact"
+    ],
+    "version": "1.0",
+    "last_updated": "2026-04-12",
+    "notes": "Dataset for training rumor detection models. Labels: 0=misinformation, 1=accurate, 0.5=mixed/uncertain"
+  }
+}
