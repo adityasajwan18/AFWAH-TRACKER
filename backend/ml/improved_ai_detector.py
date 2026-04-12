@@ -95,8 +95,9 @@ class ImprovedAIDetector:
             # Generate detailed report
             report = self._generate_report(features, confidence, pixels)
             
+            # Lower threshold for higher sensitivity to AI images
             return {
-                "is_ai_generated": confidence > 0.65,
+                "is_ai_generated": confidence > 0.5,
                 "confidence": float(confidence),
                 "method_scores": {k: float(v) for k, v in features.items()},
                 "ml_score": float(ml_score),
@@ -127,13 +128,27 @@ class ImprovedAIDetector:
             
             # Analyze frequency distribution
             total_energy = np.sum(magnitude ** 2)
-            high_freq_energy = np.sum(magnitude[magnitude > np.percentile(magnitude, 80)] ** 2)
+            high_freq_energy = np.sum(magnitude[magnitude > np.percentile(magnitude, 75)] ** 2)
+            low_freq_energy = np.sum(magnitude[magnitude < np.percentile(magnitude, 25)] ** 2)
             
-            # AI images tend to have different frequency patterns
+            # AI images tend to have excessive high-frequency noise or unnatural smoothing
             freq_ratio = high_freq_energy / (total_energy + 1e-10)
             
-            # Normalize to 0-1
-            return min(max(freq_ratio / 0.3, 0), 1.0)
+            # Check for suspicious frequency patterns
+            h, w = magnitude.shape
+            center_region = magnitude[h//4:3*h//4, w//4:3*w//4]
+            center_energy = center_region.mean()
+            edge_energy = np.concatenate([
+                magnitude[:h//4, :].flatten(),
+                magnitude[3*h//4:, :].flatten()
+            ]).mean()
+            
+            # AI often has unnatural center/edge energy ratios
+            center_edge_ratio = center_energy / (edge_energy + 1e-10)
+            
+            # Higher weight if both indicators present - AI signs
+            ai_score = (freq_ratio * 0.6 + (1.0 if center_edge_ratio > 1.5 else 0.3) * 0.4)
+            return min(max(ai_score / 0.25, 0), 1.0)
         except:
             return 0.0
     
@@ -357,18 +372,18 @@ class ImprovedAIDetector:
     
     def _ensemble_decision(self, features: Dict[str, float], ml_score: float) -> float:
         """
-        Weighted ensemble of all detection methods.
+        Weighted ensemble of all detection methods with enhanced AI detection.
         """
         weights = {
-            'frequency': 0.20,
-            'error_level': 0.18,
-            'noise': 0.15,
-            'edge': 0.12,
-            'color': 0.10,
-            'dct': 0.10,
-            'blur': 0.08,
-            'splicing': 0.07,
-            'metadata': 0.00  # Metadata alone isn't conclusive
+            'frequency': 0.25,      # Highest weight - most reliable
+            'error_level': 0.15,    # Adjusted
+            'noise': 0.18,          # Increased - AI noise patterns distinctive
+            'edge': 0.15,           # AI struggles with edges
+            'color': 0.12,          # Blue-shifted tendency in AI images
+            'dct': 0.10,            # DCT artifacts
+            'blur': 0.05,           # Reduced weight
+            'splicing': 0.05,       # Splicing less common in AI
+            'metadata': 0.00        # Metadata alone isn't conclusive
         }
         
         # Weighted average of feature scores
@@ -377,8 +392,13 @@ class ImprovedAIDetector:
             for key in features if key in weights
         )
         
-        # Add ML score with moderate weight
-        ensemble_score = ensemble_score * 0.7 + ml_score * 0.3
+        # If multiple detectors agree (high confidence), boost the score
+        high_confidence_methods = [score for score in features.values() if score > 0.7]
+        if len(high_confidence_methods) >= 2:
+            ensemble_score = min(ensemble_score * 1.15 + 0.1, 1.0)  # Boost confidence
+        
+        # Add ML score with lower weight since it's untrained
+        ensemble_score = ensemble_score * 0.85 + ml_score * 0.15
         
         return min(max(ensemble_score, 0), 1.0)
     

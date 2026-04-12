@@ -6,7 +6,7 @@
 let settings = {
   apiUrl: 'http://localhost:8000',
   autoCheck: true,
-  confidenceThreshold: 0.65
+  confidenceThreshold: 0.5  // Lowered from 0.65 for better sensitivity
 };
 
 // Load settings
@@ -107,24 +107,55 @@ async function analyzePost(postElement, platform) {
     const postText = textElement.textContent.trim();
     if (!postText || postText.length < 10) return;
     
-    // Analyze
-    const response = await fetch(`${settings.apiUrl}/api/analyze`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: postText })
-    });
-    
-    if (!response.ok) throw new Error('Analysis failed');
-    
-    const result = await response.json();
+    // Analyze with retry logic
+    const result = await analyzeWithRetry(postText, 3);
     
     // Only show overlay if confidence exceeds threshold
-    if (result.confidence >= settings.confidenceThreshold) {
+    if (result && result.confidence >= settings.confidenceThreshold) {
       injectOverlay(postElement, result, platform);
     }
     
   } catch (error) {
     console.error('[AFWAH] Analysis error:', error);
+  }
+}
+
+// ── Analyze text with retry logic ───────────────────────────
+async function analyzeWithRetry(text, retries = 3, delay = 1000) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
+      const response = await fetch(`${settings.apiUrl}/api/analyze`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: text }),
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeout);
+      
+      if (!response.ok) {
+        console.warn(`[AFWAH] Analysis attempt ${attempt} failed with status ${response.status}`);
+        if (attempt < retries) {
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+        throw new Error(`API returned ${response.status}`);
+      }
+      
+      return await response.json();
+      
+    } catch (error) {
+      console.debug(`[AFWAH] Analysis attempt ${attempt}/${retries} failed:`, error.message);
+      
+      if (attempt < retries) {
+        await new Promise(resolve => setTimeout(resolve, delay));
+      } else {
+        throw error;
+      }
+    }
   }
 }
 
