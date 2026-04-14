@@ -18,7 +18,6 @@ app = FastAPI(
     redoc_url="/redoc",      # ReDoc UI at /redoc
 )
 
-# ── CORS Middleware ───────────────────────────────────────────
 # Allows our frontend (React or plain HTML) to call the API
 app.add_middleware(
     CORSMiddleware,
